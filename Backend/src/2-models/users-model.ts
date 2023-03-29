@@ -1,24 +1,22 @@
 class userModel {
     
-    vacationId: number;
-    destination: number;
-    description: string;
-    startDate: string;
-    endDate: string;
-    price: number;
-    imageFileName: string;
+    userId: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    hashedPassword: string;
+    roleId: number;
 
 
-    public constructor(vacation: userModel) {
+    public constructor(user: userModel) {
      
-      this.vacationId = vacation.vacationId;
-      this.destination = vacation.destination;
-      this.description = vacation.description;
-      this.startDate = vacation.startDate;
-      this.endDate = vacation.endDate;
-      this.price = vacation.price;
-      this.imageFileName = vacation.imageFileName;
-
+      this.userId = user.userId;
+      this.firstName = user.firstName;
+      this.lastName = user.lastName;
+      this.email = user.email;
+      this.hashedPassword = user.hashedPassword;
+      this.roleId = user.roleId;
+      
     }
 
 }

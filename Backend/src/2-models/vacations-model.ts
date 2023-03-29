@@ -1,7 +1,7 @@
 class vacationModel {
     
     vacationId: number;
-    destination: number;
+    destination: string;
     description: string;
     startDate: string;
     endDate: string;
