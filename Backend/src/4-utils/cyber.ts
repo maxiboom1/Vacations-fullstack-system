@@ -1,4 +1,5 @@
 import UserModel from "../2-models/users-model";
+
 import jwt from "jsonwebtoken";
 
 const secretKey = "My kitten is soo cute";
