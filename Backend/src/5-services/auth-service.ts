@@ -1,9 +1,9 @@
 import { OkPacket } from "mysql";
 import { ValidationError } from "../2-models/client-errors";
-import userModel from "../2-models/users-model";
+import UserModel from "../2-models/users-model";
 import dal from "../4-utils/dal";
 
-async function register(user: userModel): Promise<string>{
+async function register(user: UserModel): Promise<string>{
 
     const isTaken = await isEmailTaken(user.email);
     
@@ -14,6 +14,10 @@ async function register(user: userModel): Promise<string>{
     const sql = `INSERT INTO users VALUES (DEFAULT, ?, ?, ?, ?, ?);`;
 
     const result:OkPacket = await dal.execute(sql, [user.firstName,user.lastName, user.hashedPassword, user.email, user.roleId]);
+
+    user.userId = result.insertId;
+
+    // create token
 
     return null;
 

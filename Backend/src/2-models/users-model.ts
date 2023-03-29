@@ -1,4 +1,4 @@
-class userModel {
+class UserModel {
     
     userId: number;
     firstName: string;
@@ -8,7 +8,7 @@ class userModel {
     roleId: number;
 
 
-    public constructor(user: userModel) {
+    public constructor(user: UserModel) {
      
       this.userId = user.userId;
       this.firstName = user.firstName;
@@ -22,4 +22,4 @@ class userModel {
 }
 
 
-export default userModel;
+export default UserModel;
