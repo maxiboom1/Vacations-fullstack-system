@@ -1,4 +1,4 @@
-class vacationModel {
+class VacationModel {
     
     vacationId: number;
     destination: string;
@@ -9,7 +9,7 @@ class vacationModel {
     imageFileName: string;
 
 
-    public constructor(vacation: vacationModel) {
+    public constructor(vacation: VacationModel) {
      
       this.vacationId = vacation.vacationId;
       this.destination = vacation.destination;
@@ -24,4 +24,4 @@ class vacationModel {
 }
 
 
-export default vacationModel;
+export default VacationModel;

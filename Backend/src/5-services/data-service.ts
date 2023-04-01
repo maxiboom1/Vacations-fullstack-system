@@ -1,10 +1,8 @@
 import dal from "../4-utils/dal";
 import { OkPacket } from "mysql";
-import vacationModel from "../2-models/vacations-model";
+import VacationModel from "../2-models/vacations-model";
 
-async function getAllVacations(): Promise<vacationModel[]> {
-    
-    let userId = 1;
+async function getAllVacations(userId:number): Promise<VacationModel[]> {
     
     const sql =  `SELECT DISTINCT
     V.*,

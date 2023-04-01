@@ -1,9 +1,6 @@
-class roleModel {  
-    
-    roleId: number;
-    roleName: string;
-
+enum RoleModel{
+    Admin = 1,
+    User = 2
 }
 
-
-export default roleModel;
+export default RoleModel;
