@@ -4,13 +4,13 @@ import cyber from "../4-utils/cyber";
 
 const router = express.Router();
 
-router.get("/vacations", async (request: Request, response: Response, next: NextFunction) => {
+router.get("/vacations" ,async (request: Request, response: Response, next: NextFunction) => {
     
     try {
         
         const token = request.header("authorization").substring(7); // "Bearer the-token"
         
-        const user = await cyber.decodeToken(token);
+        const user = cyber.decodeToken(token);
         
         const userId = user.userId;
         
@@ -24,19 +24,6 @@ router.get("/vacations", async (request: Request, response: Response, next: Next
     }
 
 });
-
-// router.post("/vacations", async (request: Request, response: Response, next: NextFunction) => {
-    
-//     try {   
-//         const vacations = await dataService.getAllVacations();
-//         response.json(vacations);
-//     }
-    
-//     catch(err: any) {
-//         next(err);
-//     }
-
-// });
 
 
 export default router;

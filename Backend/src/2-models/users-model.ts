@@ -4,7 +4,7 @@ class UserModel {
     firstName: string;
     lastName: string;
     email: string;
-    hashedPassword: string;
+    password: string;
     roleId: number;
 
 
@@ -14,7 +14,7 @@ class UserModel {
       this.firstName = user.firstName;
       this.lastName = user.lastName;
       this.email = user.email;
-      this.hashedPassword = user.hashedPassword;
+      this.password = user.password;
       this.roleId = user.roleId;
       
     }
