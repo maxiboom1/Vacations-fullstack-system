@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2023 at 09:23 PM
+-- Generation Time: Apr 03, 2023 at 05:48 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -64,7 +64,7 @@ CREATE TABLE `users` (
   `firstName` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `hashedPassword` text NOT NULL,
+  `password` text NOT NULL,
   `roleId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -72,15 +72,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`userId`, `firstName`, `lastname`, `email`, `hashedPassword`, `roleId`) VALUES
+INSERT INTO `users` (`userId`, `firstName`, `lastname`, `email`, `password`, `roleId`) VALUES
 (1, 'alex', 'samih', 'mail@mail.ru', '123456', 2),
 (2, 'Bart', 'Simpson', 'bart@gmail.com', '12345', 1),
 (4, 'Homer', 'Simpson', 'homer@gmail.com', '12345', 1),
-(5, 'Anna', 'Vekselman', 'veks@gmail.com', '12345', 1),
-(6, 'Dima', 'belii', 'dima@gmail.com', '12345', 1),
-(7, 'Assaf', 'Fink', 'kittens4ever@gmail.com', '12345', 2),
-(8, 'Mark', 'twen', 'mark@gmail.com', '12345', 1),
-(9, 'fedia', 'Dostoyevskii', 'Fedor@gmail.com', '12345', 1);
+(13, 'Anna-new', 'Veks', 'anna@veks.co.il', '06d700ebb7e452b52749bdf9b84813b24431aa0ebbf7f07761a4b1bd1b2c2e5c64122e9bef3aff69e1af7ab11af98a68e6b13ecce2cea44037364b525e3de954', 2);
 
 -- --------------------------------------------------------
 
@@ -151,7 +147,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `vacations`
