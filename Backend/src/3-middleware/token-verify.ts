@@ -1,7 +1,7 @@
 import { Request, NextFunction, Response } from "express";
 import cyber from "../4-utils/cyber";
 
-function verifyLoggedIn(request: Request, response: Response, next: NextFunction){
+export function verifyLoggedIn(request: Request, response: Response, next: NextFunction){
     
     console.log('verify Token');
 
@@ -14,7 +14,7 @@ function verifyLoggedIn(request: Request, response: Response, next: NextFunction
 
 }
 
-function verifyAdmin(request: Request, response: Response, next: NextFunction){
+export function verifyAdmin(request: Request, response: Response, next: NextFunction){
     
     console.log('Verify Admin');
     
@@ -27,8 +27,4 @@ function verifyAdmin(request: Request, response: Response, next: NextFunction){
 
 }
 
-export default {
-    verifyLoggedIn,
-    verifyAdmin
-}
 

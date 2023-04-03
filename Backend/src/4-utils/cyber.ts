@@ -49,7 +49,7 @@ function verifyToken(request: Request, adminCheck?: boolean): boolean {
 
     const token = request.header("authorization")?.substring(7);
     
-    if(!token) throw new UnauthorizedError('Some error occurred');
+    if(!token) throw new UnauthorizedError('No token found');
 
     jwt.verify(token, secretKey, (err, container:{user: UserModel})=>{
         

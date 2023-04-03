@@ -1,10 +1,11 @@
 import express, { Request, Response, NextFunction } from "express";
 import dataService from "../5-services/data-service";
 import cyber from "../4-utils/cyber";
+import { verifyAdmin, verifyLoggedIn } from "../3-middleware/token-verify";
 
 const router = express.Router();
 
-router.get("/vacations" ,async (request: Request, response: Response, next: NextFunction) => {
+router.get("/vacations", [verifyLoggedIn, verifyAdmin], async (request: Request, response: Response, next: NextFunction) => {
     
     try {
         
