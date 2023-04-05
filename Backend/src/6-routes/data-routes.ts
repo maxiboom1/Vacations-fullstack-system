@@ -73,5 +73,17 @@ router.put("/vacations/:id([0-9]+)", async (request: Request, response: Response
     }
 });
 
+// Delete:
+
+router.delete("/vacations/:id([0-9]+)", async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        const id = +request.params.id;
+        await dataService.deleteVacation(id);
+        response.sendStatus(204);
+    }
+    catch(err: any) {
+        next(err);
+    }
+});
 
 export default router;

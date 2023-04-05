@@ -54,5 +54,6 @@ async function deleteImage(imageName: string): Promise<void>{
 export default {
     getImagePath,
     saveFile,
-    updateFile
+    updateFile,
+    deleteImage
 }
