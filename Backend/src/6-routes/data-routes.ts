@@ -3,6 +3,7 @@ import dataService from "../5-services/data-service";
 import cyber from "../4-utils/cyber";
 import { verifyAdmin, verifyLoggedIn } from "../3-middleware/token-verify";
 import imageHandler from "../4-utils/image-handler";
+import VacationModel from "../2-models/vacations-model";
 
 const router = express.Router();
 
@@ -27,7 +28,7 @@ router.get("/vacations", verifyLoggedIn, async (request: Request, response: Resp
 
 });
 
-router.get("/img/:imageName", verifyLoggedIn, async (request: Request, response: Response, next: NextFunction) => {
+router.get("/img/:imageName", async (request: Request, response: Response, next: NextFunction) => {
     
     try {
         const imageName = request.params.imageName;
@@ -38,6 +39,23 @@ router.get("/img/:imageName", verifyLoggedIn, async (request: Request, response:
         next(err);
     }
 
+});
+
+router.post("/vacations", async (request: Request, response: Response, next: NextFunction) => {
+    
+    try {
+        // Take image if exist:
+        request.body.image = request.files?.image;
+
+        const vacation = new VacationModel(request.body);
+        
+        const addedVacation = await dataService.addVacation(vacation);
+        
+        response.status(201).json(addedVacation);
+    }
+    catch (err: any) {
+        next(err);
+    }
 });
 
 

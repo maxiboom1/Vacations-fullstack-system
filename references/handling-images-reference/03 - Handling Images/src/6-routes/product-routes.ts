@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
 import ProductModel from "../2-models/product-model";
-import imageHandler from "../4-utils/image-handler";
+import imageHandler from "../4-utils/image-handler-assaf";
 import productsService from "../5-services/products-service";
 
 const router = express.Router(); // Capital R

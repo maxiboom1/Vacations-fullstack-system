@@ -3,7 +3,7 @@ import { ResourceNotFoundError } from "../2-models/client-errors";
 import ProductModel from "../2-models/product-model";
 import appConfig from "../4-utils/app-config";
 import dal from "../4-utils/dal";
-import imageHandler from "../4-utils/image-handler";
+import imageHandler from "../4-utils/image-handler-assaf";
 
 // Get all products from database: 
 async function getAllProducts(): Promise<ProductModel[]> {
