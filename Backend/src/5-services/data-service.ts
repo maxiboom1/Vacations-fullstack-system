@@ -1,6 +1,7 @@
 import dal from "../4-utils/dal";
 import { OkPacket } from "mysql";
 import VacationModel from "../2-models/vacations-model";
+import imageHandler from "../4-utils/image-handler";
 
 async function getAllVacations(userId:number): Promise<VacationModel[]> {
     
@@ -16,6 +17,8 @@ async function getAllVacations(userId:number): Promise<VacationModel[]> {
     
     const categories = await dal.execute(sql,[userId]);
     
+    categories.imageURL = imageHandler.getImagePath(categories.imageName);
+
     return categories;
 
 }

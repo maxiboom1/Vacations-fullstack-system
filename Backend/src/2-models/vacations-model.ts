@@ -1,12 +1,15 @@
+import { UploadedFile } from "express-fileupload";
+
 class VacationModel {
     
-    vacationId: number;
-    destination: string;
-    description: string;
-    startDate: string;
-    endDate: string;
-    price: number;
-    imageFileName: string;
+    public vacationId: number;
+    public destination: string;
+    public description: string;
+    public startDate: string;
+    public endDate: string;
+    public price: number;
+    public image: UploadedFile; // Image file
+    public imageURL:string
 
 
     public constructor(vacation: VacationModel) {
@@ -17,11 +20,10 @@ class VacationModel {
       this.startDate = vacation.startDate;
       this.endDate = vacation.endDate;
       this.price = vacation.price;
-      this.imageFileName = vacation.imageFileName;
-
+      this.image = vacation.image;
+      this.imageURL = vacation.imageURL
     }
 
 }
-
 
 export default VacationModel;
