@@ -58,5 +58,20 @@ router.post("/vacations", async (request: Request, response: Response, next: Nex
     }
 });
 
+// PUT http://localhost:4000/api/products/:id
+router.put("/vacations/:id([0-9]+)", async (request: Request, response: Response, next: NextFunction) => {
+    
+    try {
+        request.body.vacationId = +request.params.id;
+        request.body.image = request.files?.image;
+        const vacation = new VacationModel(request.body);
+        const updatedVacation = await dataService.updateVacation(vacation);
+        response.json(updatedVacation);
+    }
+    catch (err: any) {
+        next(err);
+    }
+});
+
 
 export default router;

@@ -157,7 +157,7 @@ async function getProductImageName(id: number): Promise<string> {
     const product = products[0];
 
     // If id not found: 
-    if (!product) return null;
+    if (!product) return "null";
 
     // Get image name: 
     const imageName = product.imageName;

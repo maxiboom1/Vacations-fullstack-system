@@ -7,7 +7,6 @@ class AppConfig {
 
     public imagesUrl = this.serverUrl + "/api/img/";
 
-
     // Database Host (on which computer the database exists):
     public mySqlHost = "localhost";
 
