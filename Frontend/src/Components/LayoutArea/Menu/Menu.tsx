@@ -3,6 +3,9 @@ import "./Menu.css";
 
 function Menu(): JSX.Element {
     return (
+        
+        <div>
+        
         <div className="Menu">
 			<NavLink to="/home">Home</NavLink>
             <span> | </span>
@@ -10,6 +13,9 @@ function Menu(): JSX.Element {
             <span> | </span>
 			<NavLink to="/insert">Insert</NavLink>
         </div>
+
+        </div>
+        
     );
 }
 
