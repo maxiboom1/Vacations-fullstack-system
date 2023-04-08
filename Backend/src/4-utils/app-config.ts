@@ -1,23 +1,16 @@
 class AppConfig {
 
-    // Server Port:
+    // App settings:
     public port = 4000;
-
     public serverUrl = "http://localhost:" + this.port;
-
     public imagesUrl = this.serverUrl + "/api/img/";
 
-    // Database Host (on which computer the database exists):
+    // Database settings:
     public mySqlHost = "localhost";
-
-    // Database User
     public mySqlUser = "root";
-
-    // Database Password: 
     public mySqlPassword = "";
+    public mySqlDatabase = "vacations";
 
-    // Database Name: 
-    public mySqlDatabase = "vacations"; // Fill in database name
 }
 
 const appConfig = new AppConfig();

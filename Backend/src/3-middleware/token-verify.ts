@@ -3,8 +3,6 @@ import cyber from "../4-utils/cyber";
 
 export function verifyLoggedIn(request: Request, response: Response, next: NextFunction){
     
-    console.log('verify Token');
-
     try{
         cyber.verifyToken(request);
         next();
@@ -15,9 +13,7 @@ export function verifyLoggedIn(request: Request, response: Response, next: NextF
 }
 
 export function verifyAdmin(request: Request, response: Response, next: NextFunction){
-    
-    console.log('Verify Admin');
-    
+        
     try{
         cyber.verifyToken(request, true);
         next();

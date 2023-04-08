@@ -43,7 +43,12 @@ function hashPassword(password:string): string{
 }
 
 
-// user - verify funcs
+/** 
+ * Checks Token validity using jsonwebtoken.verify() sync method.
+ * @param request Function will take "authorization" header from the request object.
+ * @param adminCheck Optional, if gets true checks also for admin role.
+ * @return Return true if token is valid, else throws err.
+ */ 
 
 function verifyToken(request: Request, adminCheck?: boolean): boolean {
 

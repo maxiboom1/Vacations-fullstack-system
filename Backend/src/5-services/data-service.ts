@@ -93,7 +93,6 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel>{
 
 }
 
-// delete an existing vacation
 async function deleteVacation(id: number): Promise<void>{
     
     const imageName = await getImageName(id);

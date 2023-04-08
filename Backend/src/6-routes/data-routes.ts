@@ -58,7 +58,6 @@ router.post("/vacations", async (request: Request, response: Response, next: Nex
     }
 });
 
-// PUT http://localhost:4000/api/products/:id
 router.put("/vacations/:id([0-9]+)", async (request: Request, response: Response, next: NextFunction) => {
     
     try {
@@ -72,8 +71,6 @@ router.put("/vacations/:id([0-9]+)", async (request: Request, response: Response
         next(err);
     }
 });
-
-// Delete:
 
 router.delete("/vacations/:id([0-9]+)", async (request: Request, response: Response, next: NextFunction) => {
     try {

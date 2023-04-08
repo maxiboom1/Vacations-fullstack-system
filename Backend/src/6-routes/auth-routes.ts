@@ -5,7 +5,6 @@ import CredentialsModel from "../2-models/credentials-model";
 
 const router = express.Router();
 
-// POST http://localhost:4000/register
 
 router.post("/register", async (request:Request, response:Response, next:NextFunction)=>{
     try{
