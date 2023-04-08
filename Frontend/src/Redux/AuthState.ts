@@ -19,6 +19,7 @@ export class AuthState {
 // 2. Auth Action Type:
 export enum AuthActionType {
     Register,
+    Refresh,
     Login,
     Logout
 }
@@ -39,6 +40,7 @@ export function authReducer(currentState = new AuthState(), action: AuthAction):
     switch (action.type) {
 
         case AuthActionType.Register: // Here, the payload is a token
+        case AuthActionType.Refresh: // Here, the payload is a refreshed token
         case AuthActionType.Login: // Here, the payload is a token
             newState.token = action.payload;
             newState.user = jwtDecode<{ user: UserModel }>(action.payload).user; // Extract user from token.
