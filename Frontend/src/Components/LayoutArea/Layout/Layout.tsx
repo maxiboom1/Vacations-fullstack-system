@@ -9,7 +9,7 @@ function Layout(): JSX.Element {
     const isLogged = authStore.getState().token;
     
     if(!isLogged) return <Home />;
-    
+        
     return (
         <div className="Layout">
             

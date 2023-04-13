@@ -5,7 +5,7 @@ import UserModel from "../Models/UserModel";
 // 1. Global Auth State:
 export class AuthState {
     
-    public token: string = null;
+    public token: string = 'abc';
     public user: UserModel = null;
 
     // public constructor() {
