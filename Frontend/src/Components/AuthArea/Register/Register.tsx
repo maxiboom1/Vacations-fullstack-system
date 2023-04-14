@@ -15,7 +15,7 @@ function Register(): JSX.Element {
     async function send(user: UserModel){ 
         
         try{ 
-            await authService.register(user);
+            await authService.register(user); // don't forget  await! it will cause  uncaught in promise err 
             notifyService.success("Welcome, " + authStore.getState().user.firstName);
             navigate("/home");
         }catch(e:any){

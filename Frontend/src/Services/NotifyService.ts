@@ -3,8 +3,9 @@ import { Notyf } from "notyf";
 class NotifyService {
 
     private notyf = new Notyf({
-        duration: 3000,
-        position: { x: "center", y: "top" }
+        duration: 5000,
+        position: { x: "right", y: "bottom" },
+        dismissible: true,
     });
 
     public success(message: string): void {
@@ -25,7 +26,7 @@ class NotifyService {
         if (err.response?.data) return err.response.data;
 
         // Unknown error (JIC = Just in Case)
-        return "Some error, please try again(From notyf extract)";
+        return "Some error, please try again";
     }
 
 }
