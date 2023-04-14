@@ -15,7 +15,7 @@ function Register(): JSX.Element {
     async function send(user: UserModel){ 
         
         try{ 
-            authService.register(user);
+            await authService.register(user);
             notifyService.success("Welcome, " + authStore.getState().user.firstName);
             navigate("/home");
         }catch(e:any){

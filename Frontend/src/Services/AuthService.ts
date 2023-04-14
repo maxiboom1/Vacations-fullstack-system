@@ -10,9 +10,9 @@ class AuthService{
     // Register - send user to register URL, get token and store it in authState
     public async register(user: UserModel): Promise<void>{
         
-        const response = axios.post<string>(appConfig.registerURL, user);
+        const response = await axios.post<string>(appConfig.registerURL, user);
 
-        const token = (await response).data;
+        const token = response.data;
 
         authStore.dispatch({type: AuthActionType.Register, payload: token});
 
