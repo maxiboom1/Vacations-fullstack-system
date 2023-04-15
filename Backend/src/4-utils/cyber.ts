@@ -27,8 +27,8 @@ async function createToken(user: UserModel): Promise<string>{
 
 function decodeToken(token:string): UserModel {
     
-    const user = (jwt.verify(token, secretKey)) as any; // maybe we need to fix it...
-        
+    const wrappedUser = (jwt.verify(token, secretKey)) as any; // maybe we need to fix it...
+    const {user} = wrappedUser;  
     return user;
 
 }

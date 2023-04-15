@@ -12,13 +12,9 @@ router.get("/vacations", verifyLoggedIn, async (request: Request, response: Resp
     try {
         
         const token = request.header("authorization").substring(7); // "Bearer the-token"
-        
         const user = cyber.decodeToken(token);
-        
         const userId = user.userId;
-        
         const vacations = await dataService.getAllVacations(userId);
-        
         response.json(vacations);
     }
     
@@ -82,5 +78,24 @@ router.delete("/vacations/:id([0-9]+)", async (request: Request, response: Respo
         next(err);
     }
 });
+
+router.post("/follow/", verifyLoggedIn, async (request: Request, response: Response, next: NextFunction) => {
+    
+    try {
+        
+        const token = request.header("authorization").substring(7); // "Bearer the-token"
+        const action = request.body?.action; 
+        const userId = cyber.decodeToken(token).userId;
+        const vacationId = +request.body.vacationId;
+        await dataService.updateFollowers(userId, vacationId, action === "follow"); // pass true if action === "follow"
+        response.sendStatus(204);
+    }
+    
+    catch(err: any) {
+        next(err);
+    }
+
+});
+
 
 export default router;

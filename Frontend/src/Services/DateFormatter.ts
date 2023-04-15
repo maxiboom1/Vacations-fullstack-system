@@ -3,7 +3,6 @@
 // TO DO: siplify this
 function formatDate(timeString: string): string {
     
-    console.log(timeString.length)    
     const date = new Date(timeString);
   
     if (isNaN(date.getTime())) {

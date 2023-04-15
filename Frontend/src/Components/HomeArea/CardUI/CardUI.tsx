@@ -4,12 +4,21 @@ import "./CardUI.css";
 import { Card, CardMedia, CardContent, Typography, Box } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import dataService from "../../../Services/DataService";
 
-interface VacationProps { data:VacationModel; }
+interface VacationProps { data:VacationModel; };
 
 function CardUI(props: VacationProps): JSX.Element {
     
     const {data} = props; // extract vacation from VacationProps
+
+    function handleLike(vacationId: number){
+        
+        // TODO: get current follow state: how? icon style or redux ?
+
+        dataService.updateFollow(vacationId);
+
+    }
 
     return (
 
@@ -36,7 +45,7 @@ function CardUI(props: VacationProps): JSX.Element {
                     </div>                   
                 
                     <span className="vacationPrice">Only {data.price}$</span>
-                    <FavoriteIcon style={{color:"crimson", position: "absolute", top: "10px",left: "10px"}}/>
+                    <FavoriteIcon sx={{ stroke: "#ffffff", strokeWidth: 1 }} className="likeIcon" onClick={() => handleLike(data.vacationId)}/>
 
                 </CardContent>
             

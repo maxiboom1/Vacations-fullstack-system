@@ -123,9 +123,18 @@ async function getImageName(vacationId: number): Promise<string>{
 
 }
 
+async function updateFollowers(userId:number, vacationId: number, action: boolean): Promise<void>{
+    
+    // if action = true, add follow, else delete follow
+    const sql = action ? "INSERT INTO followers VALUES (?, ?)" : "DELETE FROM followers WHERE userId=? AND vacationId=?" // userId, vacationId
+    await dal.execute(sql, [userId, vacationId]);
+}
+
+
 export default {
     getAllVacations,
     addVacation,
     updateVacation,
-    deleteVacation
+    deleteVacation,
+    updateFollowers
 };
