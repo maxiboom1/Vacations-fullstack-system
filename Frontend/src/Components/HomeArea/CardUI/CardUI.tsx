@@ -1,7 +1,7 @@
 import VacationModel from "../../../Models/VacationsModel";
 import formatDate from "../../../Services/DateFormatter";
 import "./CardUI.css";
-import { Card, CardMedia, CardContent, Typography, Box } from '@mui/material';
+import { Card, CardMedia, CardContent, Box } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import dataService from "../../../Services/DataService";
