@@ -9,7 +9,7 @@ class VacationModel {
     public image: File;
     
     // Extra data from backend - we don't need to send it on add/edit new vacation:
-    public imageURL:string; 
+    public imageUrl:string; 
     public isFollowing: number;
     public followersCount: number;
   
