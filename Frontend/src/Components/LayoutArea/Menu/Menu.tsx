@@ -22,6 +22,7 @@ function Menu(): JSX.Element {
                 <AppBar sx={{ color:"AppWorkspace" }}>
                  <Toolbar>   
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontFamily:"cursive", color:"AppWorkspace"}}>Vacation Mania</Typography>
+                    <Button color="secondary" onClick={logout}>Logout</Button>
                 </Toolbar>
                 </AppBar>
 			
