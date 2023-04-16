@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 const theme = createTheme();
 
 export default function Login() {
-  
+   
   const {register, handleSubmit} = useForm<CredentialsModel>();
   const navigate = useNavigate();
 
@@ -36,7 +36,9 @@ export default function Login() {
   }
 
   return (
+    
     <div className='login'>
+    
     <ThemeProvider theme={theme}>
       
       <Container component="main" maxWidth="xs">
@@ -61,6 +63,7 @@ export default function Login() {
       </Container>
 
     </ThemeProvider>
+
     </div>
   );
 }

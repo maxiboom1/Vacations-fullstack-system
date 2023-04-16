@@ -7,6 +7,7 @@ export class VacationsState {
 
 export enum VacationsActionType {
     SaveVacations,
+    UpdateFollow,
     DeleteVacations
 }
 
@@ -27,6 +28,11 @@ export function vacationsReducer(currentState = new VacationsState(), action: Va
 
         case VacationsActionType.DeleteVacations:
             newState.vacations = [];
+            break;
+        case VacationsActionType.UpdateFollow:
+            const index = newState.vacations.findIndex((v)=> v.vacationId === action.payload.vacationId);
+            newState.vacations[index].isFollowing = action.payload.isFollowing;
+            break;
 
     }
 

@@ -110,14 +110,10 @@ async function deleteVacation(id: number): Promise<void>{
 async function getImageName(vacationId: number): Promise<string>{
 
     const sql = `SELECT imageFileName AS imageFileName FROM vacations WHERE vacationId = ?`;
-    
-    console.log(vacationId);
-
 
     const result = await dal.execute(sql,[vacationId]);
     
     const imageName = result[0]?.imageFileName; // ? checks if imageFileName exists in result.
-
 
     return imageName;
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 import VacationModel from "../Models/VacationsModel";
 import appConfig from "../Utils/AppConfig";
-import { VacationsActionType, VacationsState, vacationsStore } from "../Redux/VacationsState";
+import { VacationsActionType, vacationsStore } from "../Redux/VacationsState";
 
 class DataService {
     
