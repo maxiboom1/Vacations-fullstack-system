@@ -10,7 +10,7 @@ class AppConfig {
     public mySqlUser = "root";
     public mySqlPassword = "";
     public mySqlDatabase = "vacations";
-
+    public socketPort = 4001;
 }
 
 const appConfig = new AppConfig();

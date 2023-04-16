@@ -4,15 +4,26 @@ import dataService from "../../../Services/DataService";
 import VacationModel from "../../../Models/VacationsModel";
 import notifyService from "../../../Services/NotifyService";
 import CardUI from "../CardUI/CardUI";
-import { authStore } from "../../../Redux/AuthState";
 import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
+import appConfig from "../../../Utils/AppConfig";
+import { VacationsActionType, vacationsStore } from "../../../Redux/VacationsState";
+
+const socketService = io(appConfig.socketURL);
+
 
 function Home(): JSX.Element {
     
     const navigate = useNavigate();    
     const [vacations, setVacations] = useState<VacationModel[]>([]);
     
+    socketService.on('update', (data:any) => {
+        console.log(data);
+        vacationsStore.dispatch({type: VacationsActionType.UpdateFollow, payload:{vacationId: data.vacationId, isFollowing:data.isFollowing}})
+    });
+
     useEffect(()=>{
+
         dataService.getAllVacations()
             .then((vacations)=>{setVacations(vacations)})
             .catch((e)=>{

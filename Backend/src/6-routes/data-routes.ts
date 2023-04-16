@@ -85,6 +85,7 @@ router.post("/follow/", verifyLoggedIn, async (request: Request, response: Respo
         
         const token = request.header("authorization").substring(7); // "Bearer the-token"
         const action = request.body?.action; 
+        console.log('route: ' + action);
         const userId = cyber.decodeToken(token).userId;
         const vacationId = +request.body.vacationId;
         await dataService.updateFollowers(userId, vacationId, action === "follow"); // pass true if action === "follow"
