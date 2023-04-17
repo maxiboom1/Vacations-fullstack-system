@@ -5,22 +5,18 @@ import VacationModel from "../../../Models/VacationsModel";
 import notifyService from "../../../Services/NotifyService";
 import CardUI from "../CardUI/CardUI";
 import { useNavigate } from "react-router-dom";
-import { io } from "socket.io-client";
-import appConfig from "../../../Utils/AppConfig";
-import { VacationsActionType, vacationsStore } from "../../../Redux/VacationsState";
 
-const socketService = io(appConfig.socketURL);
-
+import { vacationsStore } from "../../../Redux/VacationsState";
 
 function Home(): JSX.Element {
-
-    const navigate = useNavigate();    
+  
+    const navigate = useNavigate();     
     const [vacations, setVacations] = useState<VacationModel[]>([]);
-
+    const [activeFilters, setActiveFilters] = useState([]);
+        
     useEffect(()=>{
-
         dataService.getAllVacations()
-            .then((v)=>{setVacations(v); originalData.push(v);})
+            .then((v)=>{setVacations(v);})
             .catch((e)=>{
                 notifyService.error(e); 
                 navigate("/greetings"); // If no token, drop the bastard.
@@ -28,47 +24,44 @@ function Home(): JSX.Element {
             );
     },[]);
 
+    useEffect(()=>{
         
-    socketService.on('update', (data:any) => {
-        
-        vacationsStore.dispatch({type: VacationsActionType.UpdateFollow, payload:{
-            vacationId: data.vacationId, 
-            isFollowing:data.isFollowing}
-        });
-        
-    });
-  
-    
-    const originalData = []; // store original vacations once onload, so  you always have complete array on data
-    let activeFilters:string[] = []; // array that stores selected filters
+        const currentVacations = activeFilters.length === 0 ? vacationsStore.getState().vacations :  vacations;
+        let filteredVacations = [...currentVacations];
+        const now = new Date();
 
-    function handleFilterChange(name: string, checked: boolean){
-        // First, lets update our local 'activeFilter' array that stores selected filters:        
-        if(checked){
-            activeFilters.push(name);
-        } else {
-            activeFilters = activeFilters.filter(f => f !== name); // here we remove unselected filter from our array
-        }
-        
-        let result = [];
-        
-        // her we run over activefilters array and build result array with filtered vacations: 
+        // Here we run over activeFilters array and filter vacations based on filter: 
         for(const filter of activeFilters){
-            console.log(filter);
+            
+            // Filter vacations that user didn't followed
             if (filter === "isFollowing") {
-                // add to result array isfollowing vacations
+                filteredVacations = filteredVacations.filter(v=> v.isFollowing === 1);
             }
-            if (filter === "actualVacations") {
-                // add to result array actual vacations
+            
+            // Filter all past vacations
+            else if (filter === "actualVacations") {
+                filteredVacations = filteredVacations.filter(v=> new Date(v.startDate) > now);
             }
-            if (filter === "startedVacations") {
-                // add to result array started vacations
-            }
+
+            // Filter all past and all future vacations
+            else if (filter === "startedVacations") {
+                filteredVacations = filteredVacations.filter( v=> (new Date(v.startDate) < now) && (new Date(v.endDate) > now) );   
+            }             
         }
 
-        // Here, use setVacations(result) to render the result...
+        setVacations(filteredVacations);
+
+    },[activeFilters]);
+
+    // User check action will setActiveFilter state, and that will trigger useEffect that subscribed to activeFilters state (see above).
+    function handleFilterChange(name: string, checked: boolean){
+        if(checked){
+            setActiveFilters(prevFilters => [...prevFilters, name]); // Our state is arr, that way we add member to this state arr(use setState arg with prevValue and spread opr.)
+        } else {
+            setActiveFilters(prevFilters => prevFilters.filter(f => f !== name)); // Here we filter unchecked filter
+        }
     }
-        
+    
     return (
         
         <div className="Home">
