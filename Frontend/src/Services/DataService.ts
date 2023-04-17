@@ -12,13 +12,9 @@ class DataService {
         return vacations;
     }
 
-    // Gets vacation id and action as optional arg. if action === "follow", server will add to DB, else delete
-    public async updateFollow(vacationId: number, action?:string): Promise<void> {
+    public async updateFollow(vacationId: number, action:number): Promise<void> {
         
-        const data = {
-            vacationId: vacationId, 
-            action: action
-        };
+        const data = { vacationId, action };
         
         await axios.post(appConfig.followURL, data);
         

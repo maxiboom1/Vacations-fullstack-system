@@ -5,7 +5,6 @@ import imageHandler from "../4-utils/image-handler";
 import appConfig from "../4-utils/app-config";
 import { ResourceNotFoundError } from "../2-models/client-errors";
 import socketIoService from "./socketIoService";
-import { Socket } from "socket.io";
 
 async function getAllVacations(userId:number): Promise<VacationModel[]> {
     
@@ -106,8 +105,7 @@ async function deleteVacation(id: number): Promise<void>{
     if(result.affectedRows === 0) throw new ResourceNotFoundError(id);
 
     await imageHandler.deleteImage(imageName);
-    
-}
+}   
 
 async function getImageName(vacationId: number): Promise<string>{
 
@@ -121,14 +119,14 @@ async function getImageName(vacationId: number): Promise<string>{
 
 }
 
-async function updateFollowers(userId:number, vacationId: number, action: boolean): Promise<void>{
+async function updateFollowers(userId:number, vacationId: number, action: number): Promise<void>{
     
     const addQuery = `INSERT INTO followers (userId, vacationId) SELECT ?, ? 
     WHERE NOT EXISTS (SELECT 1 FROM followers WHERE userId = ? AND vacationId = ?)`;
     
     const deleteQuery = "DELETE FROM followers WHERE userId=? AND vacationId=?";
     
-    const sql = action ? addQuery : deleteQuery;
+    const sql = action === 1 ? addQuery : deleteQuery;
     
     await dal.execute(sql, [userId, vacationId, userId, vacationId]);
 
@@ -137,7 +135,6 @@ async function updateFollowers(userId:number, vacationId: number, action: boolea
     socketServer.sockets.emit('update', {vacationId:vacationId, isFollowing: action ? 1 : 0});
 
 }
-
 
 export default {
     getAllVacations,

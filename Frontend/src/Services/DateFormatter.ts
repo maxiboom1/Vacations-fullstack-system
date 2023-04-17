@@ -1,5 +1,3 @@
-
-
 // TO DO: siplify this
 function formatDate(timeString: string): string {
     

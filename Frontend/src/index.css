@@ -2,7 +2,6 @@ html, body, #root {
     height: 100%;
     text-align: center;
     color: white;
-    /* background-image: linear-gradient(rgba(187, 124, 124, 0.85),rgb(190, 111, 214)); */
     margin:0px;
 }
 

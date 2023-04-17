@@ -3,7 +3,6 @@ import img from "../../../Assets/Images/home-image1.jpg"
 import Button from '@mui/material/Button';
 import { Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { authStore } from "../../../Redux/AuthState";
 
 function Greetings(): JSX.Element {

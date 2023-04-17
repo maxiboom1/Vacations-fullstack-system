@@ -18,8 +18,12 @@ function Home(): JSX.Element {
     const [vacations, setVacations] = useState<VacationModel[]>([]);
     
     socketService.on('update', (data:any) => {
-        console.log(data);
-        vacationsStore.dispatch({type: VacationsActionType.UpdateFollow, payload:{vacationId: data.vacationId, isFollowing:data.isFollowing}})
+        
+        vacationsStore.dispatch({type: VacationsActionType.UpdateFollow, payload:{
+            vacationId: data.vacationId, 
+            isFollowing:data.isFollowing}
+        });
+        
     });
 
     useEffect(()=>{

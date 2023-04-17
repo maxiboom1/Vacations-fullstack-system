@@ -3,7 +3,6 @@
     box-sizing: border-box; /* content takes entire box */
     display: grid;
     grid-template-rows: 6.5% 93.5%;
-    /*grid-template-columns: repeat(6, 1fr); /* 1fr = one fraction = one unit */
 }
 
 .Layout > main {

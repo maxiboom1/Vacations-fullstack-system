@@ -31,24 +31,22 @@ function CardUI(props: VacationProps): JSX.Element {
 
     },[]);
     
-    // TODO: too ugly...
     async function handleLike(vacationId: number){
         
         try{
-            const vacations = vacationsStore.getState().vacations;
-            const currentFollowState = vacations.find(v => v.vacationId === vacationId).isFollowing; 
+                        
+            const currentFollowState = vacationsStore.getState().vacations.find(v => v.vacationId === vacationId).isFollowing; 
             
-            const action = currentFollowState === 1 ? "unfollow": "follow";
-            
-            await dataService.updateFollow(vacationId, action);
             const newFollowState = currentFollowState === 1 ? 0 : 1;
-            vacationsStore.dispatch({type: VacationsActionType.UpdateFollow, payload:{
-                vacationId:vacationId, 
-                isFollowing: newFollowState}
-            });
-            //setIsFollowing(newFollowState);// We need to do that via subscribe
+            
+            await dataService.updateFollow(vacationId, newFollowState);
+            
+            vacationsStore.dispatch({ type:VacationsActionType.UpdateFollow, payload:{vacationId, newFollowState} });
+        
         }catch(e:any){
+            
             notifyService.error(e);
+
         }
 
     }
