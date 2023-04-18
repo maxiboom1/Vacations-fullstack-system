@@ -7,6 +7,7 @@ import CardUI from "../CardUI/CardUI";
 import { useNavigate } from "react-router-dom";
 
 import { vacationsStore } from "../../../Redux/VacationsState";
+import appConfig from "../../../Utils/AppConfig";
 
 function Home(): JSX.Element {
   
@@ -26,39 +27,31 @@ function Home(): JSX.Element {
 
     useEffect(()=>{
         
-        const currentVacations = activeFilters.length === 0 ? vacationsStore.getState().vacations :  vacations;
-        let filteredVacations = [...currentVacations];
+        const currentVacations:VacationModel[] = vacationsStore.getState().vacations;
         const now = new Date();
+        
+        const filterPredicates = {
+            isFollowing: (v: VacationModel)=> v.isFollowing ===1,
+            actualVacations: ()=> (v: VacationModel)=> new Date(v.startDate) > now,
+            startedVacations: (v: VacationModel)=> (new Date(v.startDate) < now) && (new Date(v.endDate) > now),
+        };
+        
+        const combinedFilter = (v:VacationModel) => {  
+            return activeFilters.every((filter) => filterPredicates[filter as keyof typeof filterPredicates](v));
+        };
+        
+        const filtered = currentVacations.filter(combinedFilter); 
 
-        // Here we run over activeFilters array and filter vacations based on filter: 
-        for(const filter of activeFilters){
-            
-            // Filter vacations that user didn't followed
-            if (filter === "isFollowing") {
-                filteredVacations = filteredVacations.filter(v=> v.isFollowing === 1);
-            }
-            
-            // Filter all past vacations
-            else if (filter === "actualVacations") {
-                filteredVacations = filteredVacations.filter(v=> new Date(v.startDate) > now);
-            }
-
-            // Filter all past and all future vacations
-            else if (filter === "startedVacations") {
-                filteredVacations = filteredVacations.filter( v=> (new Date(v.startDate) < now) && (new Date(v.endDate) > now) );   
-            }             
-        }
-
-        setVacations(filteredVacations);
+        setVacations(filtered);
 
     },[activeFilters]);
 
     // User check action will setActiveFilter state, and that will trigger useEffect that subscribed to activeFilters state (see above).
     function handleFilterChange(name: string, checked: boolean){
         if(checked){
-            setActiveFilters(prevFilters => [...prevFilters, name]); // Our state is arr, that way we add member to this state arr(use setState arg with prevValue and spread opr.)
+            setActiveFilters(prevFilters => [...prevFilters, name]); 
         } else {
-            setActiveFilters(prevFilters => prevFilters.filter(f => f !== name)); // Here we filter unchecked filter
+            setActiveFilters(prevFilters => prevFilters.filter(f => f !== name));
         }
     }
     
@@ -69,15 +62,15 @@ function Home(): JSX.Element {
             <h2>Our vacations offer:</h2>                      
             <div className="filterMenu">
                 <label>
-                    <input type="checkbox" name="filter1" onChange={(event) => handleFilterChange('isFollowing', event.target.checked)} />
+                    <input type="checkbox" name="filter1" onChange={(event) => handleFilterChange(appConfig.filters.IS_FOLLOWING, event.target.checked)} />
                     Filter 1
                 </label>
                 <label>
-                    <input type="checkbox" name="filter2" onChange={(event) => handleFilterChange('actualVacations', event.target.checked)} />
+                    <input type="checkbox" name="filter2" onChange={(event) => handleFilterChange(appConfig.filters.ACTUAL_VACATIONS, event.target.checked)} />
                     Filter 2
                 </label>
                 <label>
-                    <input type="checkbox" name="filter3" onChange={(event) => handleFilterChange('startedVacations', event.target.checked)} />
+                    <input type="checkbox" name="filter3" onChange={(event) => handleFilterChange(appConfig.filters.STARTED_VACATIONS, event.target.checked)} />
                     Filter 3
                 </label>
             </div>
