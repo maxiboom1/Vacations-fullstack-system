@@ -1,11 +1,27 @@
+enum URL {
+    REGISTER = 'http://localhost:4000/api/register',
+    LOGIN = 'http://localhost:4000/api/login',
+    VACATIONS = 'http://localhost:4000/api/vacations/',
+    FOLLOW = 'http://localhost:4000/api/follow/',
+    SOCKET = 'http://localhost:4001',
+  }
+enum Filters {
+    IS_FOLLOWING = 'isFollowing',
+    ACTUAL_VACATIONS = 'actualVacations',
+    STARTED_VACATIONS = 'startedVacations',
+    }
+
 class AppConfig {
     
-    public registerURL = "http://localhost:4000/api/register";
-    public loginURL = "http://localhost:4000/api/login";
-    public vacationsURL = "http://localhost:4000/api/vacations/";
-    public followURL = "http://localhost:4000/api/follow/";
-    public socketURL = "http://localhost:4001";
+    public registerURL = URL.REGISTER;
+    public loginURL = URL.LOGIN;
+    public vacationsURL = URL.VACATIONS;
+    public followURL = URL.FOLLOW;
+    public socketURL = URL.SOCKET;
+    public filters = Filters;
 }
+
+
 
 const appConfig = new AppConfig();
 
