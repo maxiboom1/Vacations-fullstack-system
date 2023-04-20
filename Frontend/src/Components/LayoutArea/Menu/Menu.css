@@ -1,12 +1,6 @@
 .navbarLogo{
-    width: 270px;
+    width: 170px;
 }
-
-@media (max-width: 430px) {
-    .navbarLogo {
-      display: none;
-    }
-  }
 
 .menuBox{
     margin: 0px 20px; /* Left-Right margin in menu */
