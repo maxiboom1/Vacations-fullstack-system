@@ -1,7 +1,16 @@
 .navbarLogo{
-    width: 300px;
+    width: 270px;
 }
 
+@media (max-width: 430px) {
+    .navbarLogo {
+      display: none;
+    }
+  }
+
 .menuBox{
-    margin: 0px 50px; /* Left-Right margin in menu */
+    margin: 0px 20px; /* Left-Right margin in menu */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
