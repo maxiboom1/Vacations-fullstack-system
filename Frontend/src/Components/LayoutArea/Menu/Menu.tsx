@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import logo from "../../../Assets/Logo/logo-dark.png";
 
 function Menu(): JSX.Element {
     
@@ -19,10 +19,12 @@ function Menu(): JSX.Element {
         
         <div className="Menu">
            <Box>
-                <AppBar sx={{ color:"AppWorkspace" }}>
-                 <Toolbar>   
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontFamily:"cursive", color:"AppWorkspace"}}>Vacation Mania</Typography>
-                    <Button color="secondary" onClick={logout}>Logout</Button>
+                <AppBar sx={{ color:"red" }}>
+                 <Toolbar className="menuBox" sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>   
+                    
+                        <img className="navbarLogo" src={logo}/>
+                        <Button sx={{ color:"white" }} onClick={logout}>Logout</Button>
+                   
                 </Toolbar>
                 </AppBar>
 			

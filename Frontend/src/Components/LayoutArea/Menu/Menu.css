@@ -1,3 +1,7 @@
-.Menu {
-	
+.navbarLogo{
+    width: 300px;
+}
+
+.menuBox{
+    margin: 0px 50px; /* Left-Right margin in menu */
 }
