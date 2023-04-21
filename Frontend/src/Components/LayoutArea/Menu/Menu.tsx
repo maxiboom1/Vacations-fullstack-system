@@ -1,32 +1,6 @@
-import { useNavigate } from 'react-router-dom';
-import { AuthActionType, authStore } from '../../../Redux/AuthState';
-
-interface Props {
-  window?: () => Window;
-}
-
-function Menu(props: Props):JSX.Element {
+import "./Menu.css";
+function Menu():JSX.Element {
   
-  enum MenuItems {LOGIN = "Login", LOGOUT = "Logout", ABOUT = "About"};
-  const navigate = useNavigate();
-  
-  // Drawer config --------------------------------------------------------------------
-  const drawerWidth = 340;
-  const navItems: MenuItems[] = [MenuItems.LOGIN, MenuItems.LOGOUT, MenuItems.ABOUT];  const { window } = props; // We secure the values with enum, so nobody will run here not valid values..
-
-  // Menu events ---------------------------------------------------------------------- 
-  const menuEvents = {
-    login: () => navigate("/login"),
-    logout: ()=> {
-      authStore.dispatch({type:AuthActionType.Logout});
-      navigate("/greetings");
-    },
-    about: ()=> alert('About in dev now... try later'),
-
-  }
-  
-  const handleMenuClick = (event:string) => {menuEvents[event.toLowerCase() as keyof typeof menuEvents]()}
-
   return (
     <div className="Menu">
       <span>menu</span> 
