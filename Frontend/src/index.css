@@ -1,8 +1,19 @@
+
+
+@font-face {
+    font-family: 'Poltawski';
+    src: url('./Assets/Fonts/PoltawskiNowy-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+
 html, body, #root {
     height: 100%;
     text-align: center;
-    color: white;
     margin:0px;
+    font-family: 'Poltawski', sans-serif;
+
 }
 
 a {

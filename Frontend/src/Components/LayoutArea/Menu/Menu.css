@@ -1,23 +1,25 @@
 .Menu{
-    background-color: rgb(255, 213, 196);
-    width: 100%;
+    background-color: rgb(196, 241, 255);
+    box-sizing: border-box; 
     color:black;
-}
-
-
-
-
-
-/* navbar with mui
-
-.navbarLogo{
-    width: 170px;
-}
-
-.menuBox{
-    margin: 0px 20px; 
+    height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-} 
-*/
+
+}
+
+.Menu > div>img{
+    width: 260px;
+    margin: 0px 30px; 
+}
+
+.menuItems > span{
+    font-size: larger;
+    margin: 0px 10px; 
+}
+
+.menuItems span:hover {
+    color: red; 
+    cursor: pointer;
+}

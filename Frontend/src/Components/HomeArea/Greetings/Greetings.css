@@ -20,19 +20,4 @@
      transform: translate(-50%, -50%);
    }
  
-   .authButtons{
-    margin: auto;
-    width: 500px;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-   }
 
-   .collageGallery{
-    margin: 0px;
-    position: absolute;
-    color: black;
-    background-color: aqua;
-    height: 40%;
-    width: 100%;
-   }

@@ -8,9 +8,12 @@ import { useNavigate } from "react-router-dom";
 
 import { vacationsStore } from "../../../Redux/VacationsState";
 import appConfig from "../../../Utils/AppConfig";
+import { authStore } from "../../../Redux/AuthState";
+import { Checkbox, FormControlLabel, FormGroup, Typography } from "@mui/material";
 
 function Home(): JSX.Element {
-  
+    
+    const user = authStore.getState().user;
     const navigate = useNavigate();     
     const [vacations, setVacations] = useState<VacationModel[]>([]);
     const [activeFilters, setActiveFilters] = useState([]);
@@ -57,27 +60,21 @@ function Home(): JSX.Element {
     
     return (
         
-        <div className="Home">
-            
-            <h2>Our vacations offer:</h2>                      
-            <div className="filterMenu">
-                <label>
-                    <input type="checkbox" name="filter1" onChange={(event) => handleFilterChange(appConfig.filters.IS_FOLLOWING, event.target.checked)} />
-                    Filter 1
-                </label>
-                <label>
-                    <input type="checkbox" name="filter2" onChange={(event) => handleFilterChange(appConfig.filters.ACTUAL_VACATIONS, event.target.checked)} />
-                    Filter 2
-                </label>
-                <label>
-                    <input type="checkbox" name="filter3" onChange={(event) => handleFilterChange(appConfig.filters.STARTED_VACATIONS, event.target.checked)} />
-                    Filter 3
-                </label>
-            </div>
-            {vacations.map((v) => (<CardUI data={v} key={v.vacationId} />))}
-
+ 
+    <div className="Home">
+        
+        <div className="filterMenu">
+            <span style={{marginRight:"20px"}}>Filters:</span>
+            <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(appConfig.filters.IS_FOLLOWING, (event.target as HTMLInputElement).checked)} label="Favorites" />
+            <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(appConfig.filters.ACTUAL_VACATIONS, (event.target as HTMLInputElement).checked)} label="Actual" />
+            <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(appConfig.filters.STARTED_VACATIONS, (event.target as HTMLInputElement).checked)} label="Started" />
         </div>
+
+        <div className="cardsBox">{vacations.map((v) => (<CardUI data={v} key={v.vacationId} />))}</div>
+
+    </div>
     );
 }
 
 export default Home;
+

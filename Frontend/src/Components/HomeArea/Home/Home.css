@@ -1,0 +1,40 @@
+.Home{
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.cardsBox{
+    box-sizing: border-box;
+    overflow: auto;
+    height: calc(100vh - 134px);
+}
+
+.cardsBox::-webkit-scrollbar {
+    width: 0.1em;
+}
+  
+.cardsBox::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+  
+.cardsBox::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border-radius: 0.5px;
+}
+  
+.cardsBox::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa;
+}
+
+
+.filterMenu{
+    text-align: right;
+    background-color: #cccccc52;
+
+    color: black;
+    height: 40px;
+    font-size: large;
+}
+
