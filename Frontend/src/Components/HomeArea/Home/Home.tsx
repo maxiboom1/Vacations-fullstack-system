@@ -5,16 +5,15 @@ import VacationModel from "../../../Models/VacationsModel";
 import notifyService from "../../../Services/NotifyService";
 import CardUI from "../CardUI/CardUI";
 import { useNavigate } from "react-router-dom";
-
 import { vacationsStore } from "../../../Redux/VacationsState";
 import appConfig from "../../../Utils/AppConfig";
-import { authStore } from "../../../Redux/AuthState";
 import { Checkbox, FormControlLabel, Pagination, Stack } from "@mui/material";
 
 function Home(): JSX.Element {
     
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const user = authStore.getState().user;
+    const cardsPerPage = 3;
+    
     const navigate = useNavigate();     
     const [vacations, setVacations] = useState<VacationModel[]>([]);
     const [activeFilters, setActiveFilters] = useState([]);
@@ -78,12 +77,12 @@ function Home(): JSX.Element {
             
             <div >{vacations.map((v) => (<CardUI data={v} key={v.vacationId} />))}</div>
 
-            <div className="paginationController">
-                <Stack spacing={2}>
+            {vacations.length > cardsPerPage&&<div className="paginationController">
+                <Stack spacing={1}>
                     <Pagination count={10} variant="outlined" shape="rounded" page={currentPage} onChange={handlePageChange}/>
                 </Stack>
-            </div>
-            
+            </div>}
+
         </div>
 
     </div>
@@ -91,4 +90,3 @@ function Home(): JSX.Element {
 }
 
 export default Home;
-
