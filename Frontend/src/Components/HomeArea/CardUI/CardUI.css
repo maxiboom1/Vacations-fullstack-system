@@ -1,12 +1,12 @@
 .CardUI {
-	width: 360px;
-    margin: 30px;
-    display: inline-block;
+	width: 340px;
+  margin: 20px;
+  display: inline-block;
 }
 
 .CardUI > .CardElement{
     position: relative;
-    font-family: fantasy;
+    font-family: 'Poltawski', sans-serif;        
     box-sizing: border-box;
     height: 450px;
     background-color: rgb(238, 222, 197);
@@ -17,6 +17,7 @@
 /* Header - vacation destination */
 .cardHeader{
     margin: 3px;
+    font-size: larger;
 }
 /* ------------------------------------------------------- */
 
@@ -25,8 +26,8 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    font-size: 22px;
-    font-family: fantasy;
+    font-size: 20px;
+    font-weight: bold;
     color: green;
 }
 
@@ -52,7 +53,6 @@
     font-size: 18px;
     text-align: justify;
     height: 120px;
-    font-family: monospace;
     margin: 0px;
     padding: 5px;
     box-sizing: border-box;
@@ -81,8 +81,7 @@
 /* Vacation price */
 .vacationPrice{
     margin: 20px;
-    font-family: fantasy;
-    font-weight: lighter;
+    font-weight: bold;
     color: crimson;
 
 }

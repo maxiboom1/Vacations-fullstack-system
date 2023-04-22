@@ -9,10 +9,11 @@ import { useNavigate } from "react-router-dom";
 import { vacationsStore } from "../../../Redux/VacationsState";
 import appConfig from "../../../Utils/AppConfig";
 import { authStore } from "../../../Redux/AuthState";
-import { Checkbox, FormControlLabel, FormGroup, Typography } from "@mui/material";
+import { Checkbox, FormControlLabel, FormGroup, Pagination, Stack, Typography } from "@mui/material";
 
 function Home(): JSX.Element {
     
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const user = authStore.getState().user;
     const navigate = useNavigate();     
     const [vacations, setVacations] = useState<VacationModel[]>([]);
@@ -57,7 +58,10 @@ function Home(): JSX.Element {
             setActiveFilters(prevFilters => prevFilters.filter(f => f !== name));
         }
     }
-    
+    const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+        setCurrentPage(value);
+        console.log(value);
+      };
     return (
         
  
@@ -70,7 +74,15 @@ function Home(): JSX.Element {
             <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(appConfig.filters.STARTED_VACATIONS, (event.target as HTMLInputElement).checked)} label="Started" />
         </div>
 
-        <div className="cardsBox">{vacations.map((v) => (<CardUI data={v} key={v.vacationId} />))}</div>
+        <div className="cardsBox">
+            <div >{vacations.map((v) => (<CardUI data={v} key={v.vacationId} />))}</div>
+
+            <div className="paginationController">
+                <Stack spacing={2}>
+                    <Pagination count={10} variant="outlined" shape="rounded" page={currentPage} onChange={handlePageChange}/>
+                </Stack>
+            </div>
+        </div>
 
     </div>
     );

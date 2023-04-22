@@ -8,7 +8,7 @@
 .cardsBox{
     box-sizing: border-box;
     overflow: auto;
-    height: calc(100vh - 134px);
+    height: calc(100vh - 87px);
 }
 
 .cardsBox::-webkit-scrollbar {
@@ -38,3 +38,9 @@
     font-size: large;
 }
 
+.paginationController{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
