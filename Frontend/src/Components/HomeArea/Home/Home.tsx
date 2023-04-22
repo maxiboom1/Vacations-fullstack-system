@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { vacationsStore } from "../../../Redux/VacationsState";
 import appConfig from "../../../Utils/AppConfig";
 import { authStore } from "../../../Redux/AuthState";
-import { Checkbox, FormControlLabel, FormGroup, Pagination, Stack, Typography } from "@mui/material";
+import { Checkbox, FormControlLabel, Pagination, Stack } from "@mui/material";
 
 function Home(): JSX.Element {
     
@@ -75,6 +75,7 @@ function Home(): JSX.Element {
         </div>
 
         <div className="cardsBox">
+            
             <div >{vacations.map((v) => (<CardUI data={v} key={v.vacationId} />))}</div>
 
             <div className="paginationController">
@@ -82,6 +83,7 @@ function Home(): JSX.Element {
                     <Pagination count={10} variant="outlined" shape="rounded" page={currentPage} onChange={handlePageChange}/>
                 </Stack>
             </div>
+            
         </div>
 
     </div>
