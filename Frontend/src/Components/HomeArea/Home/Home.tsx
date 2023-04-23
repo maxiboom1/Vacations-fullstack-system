@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import "./Home.css";
+import { useEffect, useState } from "react";
 import dataService from "../../../Services/DataService";
 import VacationModel from "../../../Models/VacationsModel";
 import notifyService from "../../../Services/NotifyService";

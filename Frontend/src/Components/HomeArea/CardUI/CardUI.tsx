@@ -16,14 +16,16 @@ function CardUI(props: VacationProps): JSX.Element {
     
     const {data} = props; // extract vacation from VacationProps
     
-    const [isFollowing, setIsFollowing] = useState(props.data.isFollowing);
+    const [isFollowing, setIsFollowing] = useState<number>(props.data.isFollowing);
     
+    //const [followersCount, setFollowersCount] = useState<number>(props.data.followersCount);
+
     useEffect(()=>{
         
         const unsubscribe = vacationsStore.subscribe(()=>{
-            
+            console.log('from subscribe');
             const index = vacationsStore.getState().vacations.findIndex((v)=> v.vacationId === props.data.vacationId);
-
+            //setFollowersCount(vacationsStore.getState().vacations[index].followersCount);
             setIsFollowing(vacationsStore.getState().vacations[index].isFollowing);// We need to do that via subscribe
         });
         
@@ -34,7 +36,8 @@ function CardUI(props: VacationProps): JSX.Element {
     async function handleLike(vacationId: number){
         
         try{
-                        
+
+            console.log('click');            
             const currentFollowState = vacationsStore.getState().vacations.find(v => v.vacationId === vacationId).isFollowing; 
             
             const newFollowState = currentFollowState === 1 ? 0 : 1;
@@ -76,8 +79,10 @@ function CardUI(props: VacationProps): JSX.Element {
                     </div>                   
                 
                     <span className="vacationPrice">Only {data.price}$</span>
-                    <FavoriteIcon sx={{ stroke: "#ffffff", strokeWidth: 1 }} style={{color: isFollowing ===1 ? "red": "#da9c9cc9"}} className="likeIcon" onClick={() => handleLike(data.vacationId)}/>
-
+                    <div className="controlBar">
+                        <span>{data.followersCount}</span>
+                        <FavoriteIcon sx={{ stroke: "#ffffff", strokeWidth: 1 }} style={{color: isFollowing ===1 ? "red": "#da9c9cc9"}} className="likeIcon1" onClick={() => handleLike(data.vacationId)}/>
+                    </div>
                 </CardContent>
             
             </Card>
