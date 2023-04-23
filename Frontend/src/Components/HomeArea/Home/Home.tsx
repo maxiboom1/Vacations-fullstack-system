@@ -18,7 +18,7 @@ function Home(): JSX.Element {
     // Pagination
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [pageCount, setPageCount] = useState<number>(1);
-    const cardsPerPage = 10;
+    const cardsPerPage = 7;
     
     const calcPagination = () => {
         const endIndex = (currentPage * cardsPerPage);
