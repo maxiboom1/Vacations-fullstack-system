@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import { UnauthorizedError } from "../2-models/client-errors";
 import { Request } from "express";
 import RoleModel from "../2-models/role-model";
-import { func } from "joi";
 
 const secretKey = "My special secret key";
 
@@ -55,8 +54,6 @@ function verifyToken(request: Request, adminCheck?: boolean): boolean {
 
     const token = request.header("authorization")?.substring(7);
     
-    checkExpDAte(token);
-
     if(!token) throw new UnauthorizedError('No token found');
 
 
@@ -71,26 +68,33 @@ function verifyToken(request: Request, adminCheck?: boolean): boolean {
     return true;
 }
 
-function refreshToken(token: string){
+function getRefreshedToken(token: string){
+    console.log('getRefresheToken func start')
     const user = decodeToken(token);
-    const newToken = createToken(user);
-    return newToken;
+    console.log('getRefresheToken func decoded')
+
+    const refreshedToken = createToken(user);
+    console.log('getRefresheToken func create new')
+
+    return refreshedToken;
+
 }
 
-function checkExpDAte(token: string){
-    const decodedToken = jwt.decode(token) as {exp: number, user: UserModel};   
-    const {exp} = decodedToken;  
-    const expDate = new Date (exp * 1000);
-    const now = new Date();
+function tokenExpired(token: string){
 
-    return expDate > now;
+    const decodedToken = jwt.decode(token) as any;
+    const expirationTime = decodedToken.exp;
+    //console.log(Date.now(), expirationTime * 1000);
+    return (Date.now() >= expirationTime * 1000); // Return true if expired
 }
 
 export default {
     createToken,
     decodeToken,
     hashPassword,
-    verifyToken
+    verifyToken,
+    getRefreshedToken,
+    tokenExpired
 }
 
 

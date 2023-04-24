@@ -2,7 +2,7 @@ import { Request, NextFunction, Response } from "express";
 import cyber from "../4-utils/cyber";
 
 export function verifyLoggedIn(request: Request, response: Response, next: NextFunction){
-    
+    console.log('mw token verify');
     try{
         cyber.verifyToken(request);
         next();
