@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { UnauthorizedError } from "../2-models/client-errors";
 import { Request } from "express";
 import RoleModel from "../2-models/role-model";
+import { func } from "joi";
 
 const secretKey = "My special secret key";
 
@@ -16,7 +17,7 @@ async function createToken(user: UserModel): Promise<string>{
     const container = { user };
 
     // Create options:
-    const options = { expiresIn: "3h" };
+    const options = { expiresIn: "3h" }; 
 
     // Create token: 
     const token = jwt.sign(container, secretKey, options);
@@ -54,6 +55,52 @@ function verifyToken(request: Request, adminCheck?: boolean): boolean {
 
     const token = request.header("authorization")?.substring(7);
     
+    checkExpDAte(token);
+
+    if(!token) throw new UnauthorizedError('No token found');
+
+
+    jwt.verify(token, secretKey, (err, container:{user: UserModel})=>{
+        
+        if (err) throw new UnauthorizedError('Invalid token'); // Check for token validity
+    
+        if (adminCheck && container.user.roleId !== RoleModel.Admin) throw new UnauthorizedError('Access denied');
+    
+    });
+
+    return true;
+}
+
+function refreshToken(token: string){
+    const user = decodeToken(token);
+    const newToken = createToken(user);
+    return newToken;
+}
+
+function checkExpDAte(token: string){
+    const decodedToken = jwt.decode(token) as {exp: number, user: UserModel};   
+    const {exp} = decodedToken;  
+    const expDate = new Date (exp * 1000);
+    const now = new Date();
+
+    return expDate > now;
+}
+
+export default {
+    createToken,
+    decodeToken,
+    hashPassword,
+    verifyToken
+}
+
+
+
+/* THE ORIGINAL FUNCTION
+
+function verifyToken(request: Request, adminCheck?: boolean): boolean {
+
+    const token = request.header("authorization")?.substring(7);
+    
     if(!token) throw new UnauthorizedError('No token found');
 
     jwt.verify(token, secretKey, (err, container:{user: UserModel})=>{
@@ -67,10 +114,4 @@ function verifyToken(request: Request, adminCheck?: boolean): boolean {
     return true;
 }
 
-
-export default {
-    createToken,
-    decodeToken,
-    hashPassword,
-    verifyToken
-}
+*/

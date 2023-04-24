@@ -22,7 +22,7 @@ class InterceptorService {
             
             //Here we catch Authorization header with fresh token:
             if(responseObject.headers['Authorization']){
-                
+                console.log('We got NEW token on client!');
                 //  Get new token from header: 
                 const refreshedToken = responseObject.headers['Authorization'].substring(7);
                 
