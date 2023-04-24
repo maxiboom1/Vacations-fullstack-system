@@ -29,6 +29,7 @@ function Menu():JSX.Element {
       </div>
       
       <div className="menuItems">
+        {user && <span>Welcome, {user.firstName}!</span>}
         {!user && <span onClick={()=> handleMenuClick(MenuItems.LOGIN)}>Login</span> }       
         {!user && <span onClick={()=> handleMenuClick(MenuItems.REGISTER)}>Register</span>}
         {user && <span onClick={()=> handleMenuClick(MenuItems.LOGOUT)}>Logout</span>}

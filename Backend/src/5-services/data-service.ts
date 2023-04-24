@@ -120,7 +120,8 @@ async function getImageName(vacationId: number): Promise<string>{
 }
 
 async function updateFollowers(userId:number, vacationId: number, action: number): Promise<void>{
-
+    
+    // Will insert data only if this crosspoint doesn't exists in DB 
     const followQuery = `INSERT INTO followers (userId, vacationId) SELECT ?, ? 
     WHERE NOT EXISTS (SELECT 1 FROM followers WHERE userId = ? AND vacationId = ?)`;
     
@@ -128,11 +129,14 @@ async function updateFollowers(userId:number, vacationId: number, action: number
     
     const sql = action === 1 ? followQuery : unFollowQuery;
     
-    await dal.execute(sql, [userId, vacationId, userId, vacationId]);
+    const response:OkPacket = await dal.execute(sql, [userId, vacationId, userId, vacationId]);
 
-    const socketServer = socketIoService.getSocketServer();
-
-    socketServer.sockets.emit('update', {vacationId, userId, isFollowing: action});
+    // JIC - In case user that already follow vacation send to follow it again
+    if(response.affectedRows !== 0){
+        const socketServer = socketIoService.getSocketServer();
+        socketServer.sockets.emit('update', {vacationId, userId, isFollowing: action});
+    }
+    
 
 }
 

@@ -10,11 +10,11 @@ async function startSocketListener(){
                         
         vacationsStore.dispatch({type: VacationsActionType.UpdateFollow, payload:{
             vacationId: data.vacationId, 
-            isFollowing:data.isFollowing}
+            isFollowing: data.isFollowing,
+            userId: data.userId
+        }
         });
-        
-        
-        setTimeout(()=>{console.log('socket after dispatch: ', vacationsStore.getState().vacations[data.vacationId]);},500)
+              
     });
 
 }
