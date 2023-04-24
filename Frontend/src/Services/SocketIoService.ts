@@ -7,7 +7,7 @@ const socketService = io(appConfig.socketURL);
 async function startSocketListener(){
     
     socketService.on('update', (data:any) => {
-                        
+
         vacationsStore.dispatch({type: VacationsActionType.UpdateFollow, payload:{
             vacationId: data.vacationId, 
             isFollowing: data.isFollowing,

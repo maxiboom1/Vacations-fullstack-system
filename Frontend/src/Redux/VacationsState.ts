@@ -31,19 +31,23 @@ export function vacationsReducer(currentState = new VacationsState(), action: Va
             newState.vacations = [];
             break;
         case VacationsActionType.UpdateFollow:
+            const currentUser = authStore.getState().user;
             const index = newState.vacations.findIndex((v)=> v.vacationId === action.payload.vacationId);
-            
+            console.log('redux payload: ',action.payload);
+            //console.log('redux current user: ',currentUser.userId);
+
             // isFollow state update
-            if(action.payload.userId === authStore.getState().user.userId){
-                console.log('redux user compare: ',action.payload.userId, authStore.getState().user.userId);
+            if(action.payload.userId === currentUser.userId){
                 newState.vacations[index].isFollowing = action.payload.isFollowing;
             }
             
             // followersCount update
             if(action.payload.isFollowing === 1){
+                console.log('++');
                 ++newState.vacations[index].followersCount;
             } else {
                 --newState.vacations[index].followersCount;
+                console.log('--');
             }
             break;
     }

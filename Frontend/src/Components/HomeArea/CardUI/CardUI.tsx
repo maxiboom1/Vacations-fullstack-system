@@ -17,6 +17,8 @@ function CardUI(props: VacationProps): JSX.Element {
     const {data} = props; // extract vacation from VacationProps
     
     const [isFollowing, setIsFollowing] = useState<number>(data.isFollowing);
+
+    const [followersCount, setFollowersCount] = useState<number>(data.followersCount);
     
     useEffect(()=>{
 
@@ -24,11 +26,12 @@ function CardUI(props: VacationProps): JSX.Element {
             const localVacations = vacationsStore.getState().vacations;
             const index = localVacations.findIndex((v)=> v.vacationId === data.vacationId);
             setIsFollowing(localVacations[index].isFollowing);
+            setFollowersCount(localVacations[index].followersCount);
         });
         
         return () => unsubscribe();
 
-    },[data.isFollowing]);
+    },[data.isFollowing, data.followersCount]);
    
     async function handleLike(vacationId: number){
         
@@ -76,7 +79,7 @@ function CardUI(props: VacationProps): JSX.Element {
                 
                     <span className="vacationPrice">Only {data.price}$</span>
                     <div className="controlBar">
-                        <span>{data.followersCount}</span>
+                        <span>{followersCount}</span>
                         <FavoriteIcon sx={{ stroke: "#ffffff", strokeWidth: 1 }} style={{color: isFollowing ===1 ? "red": "#da9c9cc9"}} className="likeIcon1" onClick={() => handleLike(data.vacationId)}/>
                     </div>
                 </CardContent>
