@@ -10,6 +10,7 @@ export class AuthState {
 
     public constructor() {
         this.token = localStorage.getItem("token");
+        
         if(this.token) {
             this.user = jwtDecode<{ user: UserModel }>(this.token).user; // Extract user from token.
         }

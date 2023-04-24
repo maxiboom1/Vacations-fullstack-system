@@ -31,9 +31,7 @@ export function vacationsReducer(currentState = new VacationsState(), action: Va
             break;
         case VacationsActionType.UpdateFollow:
             const index = newState.vacations.findIndex((v)=> v.vacationId === action.payload.vacationId);
-            newState.vacations[index].isFollowing = action.payload.newFollowState;
-            console.log('redux');
-            
+            newState.vacations[index].isFollowing = action.payload.isFollowing;
             break;
     }
 

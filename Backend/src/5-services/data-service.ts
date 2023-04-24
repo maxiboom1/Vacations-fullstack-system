@@ -120,21 +120,23 @@ async function getImageName(vacationId: number): Promise<string>{
 }
 
 async function updateFollowers(userId:number, vacationId: number, action: number): Promise<void>{
-    
-    const addQuery = `INSERT INTO followers (userId, vacationId) SELECT ?, ? 
+
+    const followQuery = `INSERT INTO followers (userId, vacationId) SELECT ?, ? 
     WHERE NOT EXISTS (SELECT 1 FROM followers WHERE userId = ? AND vacationId = ?)`;
     
-    const deleteQuery = "DELETE FROM followers WHERE userId=? AND vacationId=?";
+    const unFollowQuery = "DELETE FROM followers WHERE userId=? AND vacationId=?";
     
-    const sql = action === 1 ? addQuery : deleteQuery;
+    const sql = action === 1 ? followQuery : unFollowQuery;
     
     await dal.execute(sql, [userId, vacationId, userId, vacationId]);
 
     const socketServer = socketIoService.getSocketServer();
 
-    socketServer.sockets.emit('update', {vacationId:vacationId, isFollowing: action ? 1 : 0});
+    socketServer.sockets.emit('update', {vacationId, userId, isFollowing: action});
 
 }
+
+
 
 export default {
     getAllVacations,

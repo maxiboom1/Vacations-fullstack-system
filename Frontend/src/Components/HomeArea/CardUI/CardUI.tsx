@@ -5,7 +5,7 @@ import { Card, CardMedia, CardContent, Box } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import dataService from "../../../Services/DataService";
-import { VacationsActionType, vacationsStore } from "../../../Redux/VacationsState";
+import { vacationsStore } from "../../../Redux/VacationsState";
 import { useEffect, useState } from "react";
 import notifyService from "../../../Services/NotifyService";
 
@@ -21,15 +21,15 @@ function CardUI(props: VacationProps): JSX.Element {
     useEffect(()=>{
 
         const unsubscribe = vacationsStore.subscribe(()=>{
-            console.log('from subscribe');
-            const index = vacationsStore.getState().vacations.findIndex((v)=> v.vacationId === props.data.vacationId);
-            setIsFollowing(vacationsStore.getState().vacations[index].isFollowing);// We need to do that via subscribe
+            const localVacations = vacationsStore.getState().vacations;
+            const index = localVacations.findIndex((v)=> v.vacationId === data.vacationId);
+            setIsFollowing(localVacations[index].isFollowing);
         });
         
         return () => unsubscribe();
 
-    },[]);
-    
+    },[data.isFollowing]);
+   
     async function handleLike(vacationId: number){
         
         try{
@@ -39,11 +39,9 @@ function CardUI(props: VacationProps): JSX.Element {
             const currentFollowState = v.find(v => v.vacationId === vacationId).isFollowing; 
             
             const newFollowState = currentFollowState === 1 ? 0 : 1;
-            
+
             await dataService.updateFollow(vacationId, newFollowState);
-            
-            vacationsStore.dispatch({ type:VacationsActionType.UpdateFollow, payload:{vacationId, newFollowState} });
-        
+                    
         }catch(e:any){
             
             notifyService.error(e);
@@ -92,3 +90,4 @@ function CardUI(props: VacationProps): JSX.Element {
 }
 
 export default CardUI;
+

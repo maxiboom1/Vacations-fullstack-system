@@ -3,12 +3,21 @@ import img from "../../../Assets/Images/home-image1.jpg"
 import {  Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { authStore } from "../../../Redux/AuthState";
+import { useEffect } from "react";
 
 function Greetings(): JSX.Element {
-    
+        
     const navigate = useNavigate();
     
-    if(authStore.getState().token = null) {navigate("/home")};
+    // If token exists, redirect to home
+    useEffect(()=>{
+        
+        if(authStore.getState().token !== null) {
+            navigate("/home")
+        };
+
+    },[]);
+    
     
     return (
         
