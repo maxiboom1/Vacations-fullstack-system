@@ -68,54 +68,10 @@ function verifyToken(request: Request, adminCheck?: boolean): boolean {
     return true;
 }
 
-function getRefreshedToken(token: string){
-    console.log('getRefresheToken func start')
-    const user = decodeToken(token);
-    console.log('getRefresheToken func decoded')
-
-    const refreshedToken = createToken(user);
-    console.log('getRefresheToken func create new')
-
-    return refreshedToken;
-
-}
-
-function tokenExpired(token: string){
-
-    const decodedToken = jwt.decode(token) as any;
-    const expirationTime = decodedToken.exp;
-    //console.log(Date.now(), expirationTime * 1000);
-    return (Date.now() >= expirationTime * 1000); // Return true if expired
-}
 
 export default {
     createToken,
     decodeToken,
     hashPassword,
     verifyToken,
-    getRefreshedToken,
-    tokenExpired
 }
-
-
-
-/* THE ORIGINAL FUNCTION
-
-function verifyToken(request: Request, adminCheck?: boolean): boolean {
-
-    const token = request.header("authorization")?.substring(7);
-    
-    if(!token) throw new UnauthorizedError('No token found');
-
-    jwt.verify(token, secretKey, (err, container:{user: UserModel})=>{
-        
-        if (err) throw new UnauthorizedError('Invalid token'); // Check for token validity
-    
-        if (adminCheck && container.user.roleId !== RoleModel.Admin) throw new UnauthorizedError('Access denied');
-    
-    });
-
-    return true;
-}
-
-*/
