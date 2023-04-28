@@ -16,7 +16,7 @@ async function createToken(user: UserModel): Promise<string>{
     const container = { user };
 
     // Create options:
-    const options = { expiresIn: "3h" }; 
+    const options = { expiresIn: "10000" }; 
 
     // Create token: 
     const token = jwt.sign(container, secretKey, options);

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { vacationsStore } from "../../../Redux/VacationsState";
 import appConfig from "../../../Utils/AppConfig";
 import { Checkbox, FormControlLabel, Pagination, Stack } from "@mui/material";
+import authService from "../../../Services/AuthService";
 
 function Home(): JSX.Element {
     
@@ -18,7 +19,7 @@ function Home(): JSX.Element {
     // Pagination
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [pageCount, setPageCount] = useState<number>(1);
-    const cardsPerPage = 7;
+    const cardsPerPage = 5;
     
     const calcPagination = () => {
         const endIndex = (currentPage * cardsPerPage);
@@ -34,11 +35,15 @@ function Home(): JSX.Element {
                 setVacations(v);
                 setPageCount(Math.ceil(v.length/cardsPerPage));
             })
-            .catch((e)=>{
-                notifyService.error(e); 
-                navigate("/greetings"); // If no token, drop the bastard.
+            .catch((error)=>{
+                if (error.message === 'Unauthorized access') {
+                    authService.logout();
+                    navigate("/greetings"); // If no token, drop the bastard.
+                } else {
+                    console.log('received some error:', error);
+                    notifyService.error(error); 
                 }
-            );
+            });
     },[]);
 
     // On filters change logic (must be in useEffect, since state change is async in React)
