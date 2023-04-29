@@ -13,11 +13,13 @@ class DataService {
     }
 
     public async updateFollow(vacationId: number, action:number): Promise<void> {
-        
         const data = { vacationId, action };
-        
         await axios.post(appConfig.followURL, data);
-        
+    }
+
+    public async deleteVacation(vacationId: number): Promise<void> {
+        await axios.delete(appConfig.vacationsURL + vacationId);
+        vacationsStore.dispatch({type: VacationsActionType.DeleteVacation, payload: vacationId});
     }
 }
 

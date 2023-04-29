@@ -9,7 +9,8 @@ export class VacationsState {
 export enum VacationsActionType {
     SaveVacations,
     UpdateFollow,
-    DeleteVacations
+    DeleteVacations,
+    DeleteVacation
 }
 
 export interface VacationsAction {
@@ -29,6 +30,11 @@ export function vacationsReducer(currentState = new VacationsState(), action: Va
 
         case VacationsActionType.DeleteVacations:
             newState.vacations = [];
+            break;
+        
+        case VacationsActionType.DeleteVacation:
+            const indexToRemove = newState.vacations.findIndex( v => v.vacationId === action.payload.vacationId); // Here, the payload is vacationId to remove
+            if(indexToRemove !== -1){ newState.vacations.splice(indexToRemove, 1); } 
             break;
         case VacationsActionType.UpdateFollow:
             const currentUser = authStore.getState().user;

@@ -1,19 +1,22 @@
 import VacationModel from "../../../Models/VacationsModel";
 import formatDate from "../../../Services/DateFormatter";
 import "./CardUI.css";
-import { Card, CardMedia, CardContent, Box } from '@mui/material';
+import { Card, CardMedia, CardContent, Box, IconButton, Menu, MenuItem } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import dataService from "../../../Services/DataService";
 import { vacationsStore } from "../../../Redux/VacationsState";
 import { useEffect, useState } from "react";
 import notifyService from "../../../Services/NotifyService";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useNavigate } from "react-router-dom";
 
 interface VacationProps { data:VacationModel; };
 
 function CardUI(props: VacationProps): JSX.Element {
     
-    
+    const navigate = useNavigate();
+
     const {data} = props; // extract vacation from VacationProps
     
     const [isFollowing, setIsFollowing] = useState<number>(data.isFollowing);
@@ -46,13 +49,29 @@ function CardUI(props: VacationProps): JSX.Element {
             await dataService.updateFollow(vacationId, newFollowState);
                     
         }catch(e:any){
-            
             notifyService.error(e);
-
         }
 
     }
 
+    // MUI vertical menu
+    const options = ['Edit','Delete',];
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {setAnchorEl(event.currentTarget);};
+    const handleClose = (option: string) => {
+        setAnchorEl(null);
+        
+        if(option === "Delete"){
+            // Do delete
+        } 
+        else if (option === "Edit"){
+            navigate("/edit/" + data.vacationId);
+        }
+        
+    };
+
+    
     return (
 
         <div className="CardUI" >
@@ -80,7 +99,20 @@ function CardUI(props: VacationProps): JSX.Element {
                     <span className="vacationPrice">Only {data.price}$</span>
                     <div className="controlBar">
                         <span>{followersCount}</span>
-                        <FavoriteIcon sx={{ stroke: "#ffffff", strokeWidth: 1 }} style={{color: isFollowing ===1 ? "red": "#da9c9cc9"}} className="likeIcon1" onClick={() => handleLike(data.vacationId)}/>
+                        <FavoriteIcon sx={{ stroke: "#ffffff", strokeWidth: 1 }} style={{color: isFollowing ===1 ? "red": "#da9c9cc9"}} onClick={() => handleLike(data.vacationId)}/>
+
+                        <div>
+                            
+                            <IconButton onClick={handleClick}> <MoreVertIcon /> </IconButton>
+                            
+                            <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+                                
+                                {options.map((option) => ( <MenuItem key={option} onClick={(event) => handleClose(option)}> {option} </MenuItem> ))} 
+
+                            </Menu>
+                        
+                        </div>
+
                     </div>
                 </CardContent>
             
@@ -93,4 +125,3 @@ function CardUI(props: VacationProps): JSX.Element {
 }
 
 export default CardUI;
-
