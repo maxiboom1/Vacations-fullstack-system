@@ -14,6 +14,11 @@
     border-radius: 10%;
 }
 
+.cardImage{
+  height: 170px;
+}
+
+
 /* Header - vacation destination */
 .cardHeader{
     margin: 3px;
@@ -88,19 +93,29 @@
 /* ------------------------------------------------------- */
 
 /* User Control Bar */
-.controlBar{
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-weight: 900;
-    font-size: 18px;
-    color: rgb(248, 0, 0);
-    background-color: rgba(255, 238, 0, 0.788);
-    width: 50px;
-    border-radius: 25px 25px;
-    
+.controlBar {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  font-weight: 900;
+  font-size: 18px;
+  color: rgb(248, 0, 0);
+  background-color: rgba(255, 196, 0, 0.788);
+  width: 27px;
+  border-radius: -7px 81px;
+  display: flex;
+  justify-items: center;
+  height: 171px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
+.likesBar{
+  display: flex;
+  flex-direction: column-reverse;
+
+}
 .controlBar > span{
   margin:5px;
   vertical-align: middle;

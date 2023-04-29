@@ -6,19 +6,25 @@ import { VacationsActionType, vacationsStore } from "../Redux/VacationsState";
 class DataService {
     
     public async getAllVacations(): Promise<VacationModel[]> {
-        const response = await axios.get(appConfig.vacationsURL);
+        const response = await axios.get<VacationModel[]>(appConfig.vacationsURL);
         const vacations = response.data; 
         vacationsStore.dispatch({type: VacationsActionType.SaveVacations, payload:vacations});
         return vacations;
     }
 
     public async getOneVacation(vacationId: number): Promise<VacationModel> {
-        const response = await axios.get(appConfig.vacationsURL + vacationId);
+        const response = await axios.get<VacationModel>(appConfig.vacationsURL + vacationId);
         const vacation = response.data; 
-        console.log('this', vacation)
         return vacation;
     }
 
+    public async updateVacation(vacation: VacationModel): Promise<void> {
+        const headers = { "Content-Type": "multipart/form-data" }
+        const response = await axios.put<VacationModel>(appConfig.vacationsURL + vacation.vacationId, vacation, { headers });
+        const updatedVacation = response.data;
+        vacationsStore.dispatch({type:VacationsActionType.UpdateVacation, payload: updatedVacation});
+    }
+    
     public async updateFollow(vacationId: number, action:number): Promise<void> {
         const data = { vacationId, action };
         await axios.post(appConfig.followURL, data);
