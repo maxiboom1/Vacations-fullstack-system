@@ -15,9 +15,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import VacationModel from "../../../Models/VacationsModel";
 import { Grid } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { vacationsStore } from "../../../Redux/VacationsState";
 import { useEffect } from "react";
-import formatDate from "../../../Services/DateFormatter";
+import dataService from "../../../Services/DataService";
 
 const theme = createTheme();
 
@@ -29,13 +28,16 @@ function EditVacation(): JSX.Element {
     
     useEffect(()=>{
         const id = +params.vacationId;
-        const v = vacationsStore.getState().vacations[id];
-        console.log(formatDate(v.startDate))
-        setValue("destination", v.destination);
-        setValue("description", v.description);
-        setValue("startDate", format(new Date(v.startDate), "yyyy-MM-dd"));
-        setValue("endDate", format(new Date(v.endDate), "yyyy-MM-dd"));
-        setValue("price", v.price);
+        dataService.getOneVacation(id)
+        .then((v)=>{
+            setValue("destination", v.destination);
+            setValue("description", v.description);
+            setValue("startDate", format(new Date(v.startDate), "yyyy-MM-dd"));
+            setValue("endDate", format(new Date(v.endDate), "yyyy-MM-dd"));
+            setValue("price", v.price);
+        })
+        .catch((err) => notifyService.error(err));
+
     },[]);
     
 
@@ -83,7 +85,7 @@ function EditVacation(): JSX.Element {
                             
 
                             <Grid item xs={12}>
-                            <TextField type="number" margin="dense" required fullWidth label="Price"{...register("price")} autoComplete="Price" autoFocus />
+                            <TextField type="number" margin="dense" required fullWidth label="Price"{...register("price")} autoFocus />
                             </Grid>
 
                             <Grid item xs={12}>

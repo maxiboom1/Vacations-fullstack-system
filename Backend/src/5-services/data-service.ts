@@ -25,6 +25,14 @@ async function getAllVacations(userId:number): Promise<VacationModel[]> {
 
 }
 
+async function getOneVacation(id: number): Promise<VacationModel> {
+    const sql = `SELECT * FROM vacations WHERE vacationId = ?`;
+    const vacations = await dal.execute(sql, [id]);
+    const vacation = vacations[0];
+    if(!vacation) throw new ResourceNotFoundError(id);
+    return vacation;
+  }
+
 async function addVacation(vacation: VacationModel): Promise<VacationModel>{
     
     // TODO: Validation...
@@ -144,6 +152,7 @@ async function updateFollowers(userId:number, vacationId: number, action: number
 
 export default {
     getAllVacations,
+    getOneVacation,
     addVacation,
     updateVacation,
     deleteVacation,

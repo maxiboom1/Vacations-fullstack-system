@@ -24,6 +24,16 @@ router.get("/vacations", verifyLoggedIn, async (request: Request, response: Resp
 
 });
 
+router.get("/vacations/:id([0-9]+)", [verifyLoggedIn, verifyAdmin], async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        const id = +request.params.id;
+        const vacation = await dataService.getOneVacation(id);
+        response.json(vacation);
+    } catch(err: any){
+        next(err);
+    }
+})
+
 router.get("/img/:imageName", async (request: Request, response: Response, next: NextFunction) => {
     
     try {

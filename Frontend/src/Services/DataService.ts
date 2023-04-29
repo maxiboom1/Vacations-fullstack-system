@@ -12,6 +12,13 @@ class DataService {
         return vacations;
     }
 
+    public async getOneVacation(vacationId: number): Promise<VacationModel> {
+        const response = await axios.get(appConfig.vacationsURL + vacationId);
+        const vacation = response.data; 
+        console.log('this', vacation)
+        return vacation;
+    }
+
     public async updateFollow(vacationId: number, action:number): Promise<void> {
         const data = { vacationId, action };
         await axios.post(appConfig.followURL, data);
