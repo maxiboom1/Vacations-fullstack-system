@@ -1,7 +1,7 @@
 import "./EditVacation.css";
+import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import notifyService from "../../../Services/NotifyService";
-
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,13 +14,31 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import VacationModel from "../../../Models/VacationsModel";
 import { Grid } from "@mui/material";
+import { useParams } from "react-router-dom";
+import { vacationsStore } from "../../../Redux/VacationsState";
+import { useEffect } from "react";
+import formatDate from "../../../Services/DateFormatter";
 
 const theme = createTheme();
 
 function EditVacation(): JSX.Element {
     
-    const {register, handleSubmit} = useForm<VacationModel>();
+    const params = useParams();
+
+    const {register, handleSubmit, setValue} = useForm<VacationModel>();
     
+    useEffect(()=>{
+        const id = +params.vacationId;
+        const v = vacationsStore.getState().vacations[id];
+        console.log(formatDate(v.startDate))
+        setValue("destination", v.destination);
+        setValue("description", v.description);
+        setValue("startDate", format(new Date(v.startDate), "yyyy-MM-dd"));
+        setValue("endDate", format(new Date(v.endDate), "yyyy-MM-dd"));
+        setValue("price", v.price);
+    },[]);
+    
+
     async function send(vacation: VacationModel){ 
         
         try{ 
@@ -52,17 +70,9 @@ function EditVacation(): JSX.Element {
                             <Grid item xs={12}>
                             <TextField margin="dense" required fullWidth label="Destination"{...register("destination")} autoComplete="Destination" autoFocus />
                             </Grid>
-
-                            <Grid item xs={12}>
-                            <TextField margin="dense" required fullWidth label="Price"{...register("price")} autoComplete="Price" autoFocus />
-                            </Grid>
-
-                            <Grid item xs={12}>
-                            <TextField margin="dense" required multiline fullWidth label="Description" {...register("description")} autoComplete="Description" autoFocus />
-                            </Grid>
-
+                            
                             <Grid item xs={12} sm={6}>
-                                <span>Start date:</span>
+                                <label>Start date:</label>
                                 <TextField type="date" margin="normal" required fullWidth {...register("startDate")} />
                             </Grid>
                             
@@ -71,6 +81,15 @@ function EditVacation(): JSX.Element {
                                 <TextField type="date" margin="normal" required fullWidth {...register("endDate")} />
                             </Grid>
                             
+
+                            <Grid item xs={12}>
+                            <TextField type="number" margin="dense" required fullWidth label="Price"{...register("price")} autoComplete="Price" autoFocus />
+                            </Grid>
+
+                            <Grid item xs={12}>
+                            <TextField margin="dense" required multiline fullWidth label="Description" {...register("description")} autoComplete="Description" autoFocus />
+                            </Grid>
+
                             <Grid item xs={12}>   
                             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>Edit</Button>
                             </Grid>
