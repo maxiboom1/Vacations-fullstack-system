@@ -11,10 +11,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import VacationModel from "../../../Models/VacationsModel";
-import { Grid } from "@mui/material";
+import { Avatar, Grid } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import dataService from "../../../Services/DataService";
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 const theme = createTheme();
 
@@ -74,7 +75,7 @@ function EditVacation(): JSX.Element {
             
                     <Box sx={{marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                         
-                        {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}><LockOutlinedIcon /></Avatar> */}
+                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}><BorderColorIcon /></Avatar>
                         
                         <Typography component="h1" variant="h5">Edit Vacation</Typography>
                         
@@ -104,21 +105,21 @@ function EditVacation(): JSX.Element {
                             <TextField margin="dense" required multiline fullWidth label="Description" {...register("description")} InputLabelProps={{ shrink: true }} />
                             </Grid>
 
-                            <Grid item xs={12}>
+                            <Grid item xs={12} sm={8}>
                             <TextField type="file" fullWidth inputProps={{ accept: "image/*" }} {...register("image")} onChange={handleImageChange}/>
                             </Grid>
                             
-                            <Grid item xs={12}>
+                            <Grid item xs={12} sm={4}>
                             <img className="imagePreviewOnUpdate" src={imagePreviewUrl} />
                             </Grid>
 
 
                             <Grid item xs={12}>   
-                            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>Edit</Button>
+                            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>Update</Button>
                             </Grid>
                             
                             <Grid item xs={12}>   
-                            <Link href="/login" variant="body2"> What should we place here? </Link>
+                            <Link href="/home" variant="body2"> Take me back? </Link>
                             </Grid>
 
 

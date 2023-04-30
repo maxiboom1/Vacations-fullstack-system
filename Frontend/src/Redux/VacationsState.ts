@@ -16,7 +16,7 @@ export enum VacationsActionType {
 
 export interface VacationsAction {
     type: VacationsActionType;
-    payload: any;
+    payload?: any;
 }
 
 export function vacationsReducer(currentState = new VacationsState(), action: VacationsAction): VacationsState {

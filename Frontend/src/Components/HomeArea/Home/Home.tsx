@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { vacationsStore } from "../../../Redux/VacationsState";
 import appConfig from "../../../Utils/AppConfig";
 import { Checkbox, FormControlLabel, Pagination, Stack } from "@mui/material";
-import authService from "../../../Services/AuthService";
 
 function Home(): JSX.Element {
     
@@ -36,13 +35,8 @@ function Home(): JSX.Element {
                 setPageCount(Math.ceil(v.length/cardsPerPage));
             })
             .catch((error)=>{
-                if (error.message === 'Unauthorized access') {
-                    authService.logout();
-                    navigate("/greetings"); // If no token, drop the bastard.
-                } else {
-                    console.log('received some error:', error);
-                    notifyService.error(error); 
-                }
+                notifyService.error(error); 
+                navigate("/greetings"); 
             });
     },[]);
 
@@ -89,10 +83,12 @@ function Home(): JSX.Element {
             <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(appConfig.filters.IS_FOLLOWING, (event.target as HTMLInputElement).checked)} label="Favorites" />
             <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(appConfig.filters.ACTUAL_VACATIONS, (event.target as HTMLInputElement).checked)} label="Actual" />
             <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(appConfig.filters.STARTED_VACATIONS, (event.target as HTMLInputElement).checked)} label="Started" />
-        </div>
 
+        </div>
+       
         <div className="cardsBox">
-            
+            <br />
+            <h2>Available Vacations:</h2>
             <div >{calcPagination().map((v) => (<CardUI data={v} key={v.vacationId} />))}</div>
 
             {vacations.length > cardsPerPage&&<div className="paginationController">

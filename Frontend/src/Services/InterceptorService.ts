@@ -1,8 +1,9 @@
 import axios from "axios";
 import { AuthActionType, authStore } from "../Redux/AuthState";
+import { VacationsActionType, vacationsStore } from "../Redux/VacationsState";
 
 class InterceptorService {
-
+    
     public create(): void {
 
         // Token insert to any request:
@@ -18,21 +19,16 @@ class InterceptorService {
         });
 
         // Token refresh:
-        axios.interceptors.response.use(responseObject => {
-            
-            //Here we catch Authorization header with fresh token:
-            if(responseObject.headers['Authorization']){
-                console.log('We got NEW token on client!');
-                //  Get new token from header: 
-                const refreshedToken = responseObject.headers['Authorization'].substring(7);
-                
-                // Store new token:
-                authStore.dispatch({ type: AuthActionType.Refresh, payload: refreshedToken });
-
+        axios.interceptors.response.use(
+            response => {
+              return response;
+            },
+            error => {
+              console.log(error);
+              authStore.dispatch({type:AuthActionType.Logout});
+              vacationsStore.dispatch({type: VacationsActionType.DeleteVacations});
             }
-
-            return responseObject;
-        });
+          );
 
     }
 }
@@ -40,3 +36,5 @@ class InterceptorService {
 const interceptorService = new InterceptorService();
 
 export default interceptorService;
+
+

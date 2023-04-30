@@ -23,3 +23,11 @@
     color: red; 
     cursor: pointer;
 }
+
+
+.menuItems .userWelcome:hover {
+    color: black;
+    cursor: default;
+
+}
+

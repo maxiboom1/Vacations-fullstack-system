@@ -8,7 +8,7 @@
 .cardsBox{
     box-sizing: border-box;
     overflow: auto;
-    height: calc(100vh - 87px);
+    height: calc(100vh - 87px); 
 }
 
 .cardsBox::-webkit-scrollbar {
@@ -31,7 +31,6 @@
 .filterMenu{
     text-align: right;
     background-color: #cccccc52;
-
     color: black;
     height: 40px;
     font-size: large;
