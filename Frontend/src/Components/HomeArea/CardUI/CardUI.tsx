@@ -31,8 +31,8 @@ function CardUI(props: VacationProps): JSX.Element {
         const unsubscribe = vacationsStore.subscribe(()=>{
             const localVacations = vacationsStore.getState().vacations;
             const index = localVacations.findIndex((v)=> v.vacationId === data.vacationId);
-            setIsFollowing(localVacations[index].isFollowing);
-            setFollowersCount(localVacations[index].followersCount);
+            setIsFollowing(localVacations[index]?.isFollowing);
+            setFollowersCount(localVacations[index]?.followersCount);
         });
         
         return () => unsubscribe();
@@ -66,7 +66,8 @@ function CardUI(props: VacationProps): JSX.Element {
         setAnchorEl(null);
         
         if(option === "Delete"){
-            // Do delete
+           deleteVacation(data.vacationId);
+           
         } 
         else if (option === "Edit"){
             navigate("/edit/" + data.vacationId);
@@ -74,7 +75,15 @@ function CardUI(props: VacationProps): JSX.Element {
         
     };
 
-    console.log(data.imageUrl);
+    async function deleteVacation(vacationId: number){
+        try{
+            await dataService.deleteVacation(vacationId);
+            notifyService.success(`Vacation removed`);
+        }catch(err: any){
+            console.log(err);
+            notifyService.error(err);
+        }
+    }
     return (
 
         <div className="CardUI" >

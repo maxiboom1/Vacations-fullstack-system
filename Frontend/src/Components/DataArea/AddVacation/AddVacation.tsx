@@ -28,7 +28,7 @@ function AddVacation(): JSX.Element {
         try{ 
             vacation.image = (vacation.image as unknown as FileList)[0];
             await dataService.addVacation(vacation);                     
-            notifyService.success('Vacation has been updated');
+            notifyService.success('Vacation has been added');
             navigate("/home");
         }catch(e:any){
             notifyService.error(e);

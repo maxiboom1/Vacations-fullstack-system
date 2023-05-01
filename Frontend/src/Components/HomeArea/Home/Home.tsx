@@ -27,28 +27,35 @@ function Home(): JSX.Element {
     };
     const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => { setCurrentPage(value); };
     
-    // On page start data fetch
-    useEffect(()=>{
+    // We run this init func onload and on vacations change 
+    async function updateVacations(){
         
-        const localVacations = vacationsStore.getState().vacations;
-        
-        // If there are an vacation store => take data from it
-        if(localVacations.length > 0){
-            setVacations(localVacations);
-            setPageCount(Math.ceil(localVacations.length/cardsPerPage));
-        } else {
-            dataService.getAllVacations()
-            .then((v)=>{
-                setVacations(v);
-                setPageCount(Math.ceil(v.length/cardsPerPage));
-            })
-            .catch((error)=>{
-                notifyService.error(error); 
-                navigate("/greetings"); 
-            });
+        let v = vacationsStore.getState().vacations;
+        if(v.length === 0 ){ 
+            try{
+                v = await dataService.getAllVacations(); 
+            }catch(err: any){
+                notifyService.error(err);
+                navigate("/greetings");
+            }
         }
         
+        setVacations(v);
+        setPageCount(Math.ceil(v.length/cardsPerPage));
+        setCurrentPage(1);
+    }
+
+    // On page start data fetch
+    useEffect(()=>{
+        // On load - take and render the vacations data from store/AJAX
+        updateVacations();
+        // On each store change, update and render data
+        const unsubscribe = vacationsStore.subscribe(updateVacations);
+
+        return ()=> unsubscribe();
+        
     },[]);
+
 
     // On filters change logic (must be in useEffect, since state change is async in React)
     useEffect(()=>{

@@ -41,7 +41,6 @@ export function vacationsReducer(currentState = new VacationsState(), action: Va
         case VacationsActionType.UpdateVacation:
             const indexToUpdate = newState.vacations.findIndex(v => v.vacationId === action.payload.vacationId);
             if (indexToUpdate >= 0) {
-                console.log(action.payload);
                 newState.vacations[indexToUpdate] = action.payload;
             }
             break;
@@ -64,11 +63,10 @@ export function vacationsReducer(currentState = new VacationsState(), action: Va
             break;
         
         case VacationsActionType.DeleteVacation:
-            const indexToRemove = newState.vacations.findIndex( v => v.vacationId === action.payload.vacationId); // Here, the payload is vacationId to remove
+            const indexToRemove = newState.vacations.findIndex( v => v.vacationId === action.payload); // Here, the payload is vacationId to remove
             if(indexToRemove >= 0){ newState.vacations.splice(indexToRemove, 1); } 
             break;
     }
-
     return newState;
 }
 
