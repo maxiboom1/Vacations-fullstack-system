@@ -74,12 +74,11 @@ function CardUI(props: VacationProps): JSX.Element {
         
     };
 
-    
+    console.log(data.imageUrl);
     return (
 
         <div className="CardUI" >
             <Card className="CardElement" >
-                
                 <CardMedia className="cardImage" height={170} component="img" image={data.imageUrl} alt={data.destination}/>
 
                 <CardContent className="cardContent" style={{padding:"15px"}}>    
@@ -100,10 +99,11 @@ function CardUI(props: VacationProps): JSX.Element {
                     </div>                   
                 
                     <span className="vacationPrice">Only {data.price}$</span>
+                    
                     <div className="controlBar">
                         <div className="likesBar">
-                        <span>{followersCount}</span>
-                        <FavoriteIcon sx={{ stroke: "#ffffff", strokeWidth: 1 }} style={{color: isFollowing ===1 ? "red": "#da9c9cc9"}} onClick={() => handleLike(data.vacationId)}/>
+                            <span>{followersCount}</span>
+                            <FavoriteIcon sx={{ stroke: "#ffffff", strokeWidth: 1 }} style={{color: isFollowing ===1 ? "red": "#da9c9cc9"}} onClick={() => handleLike(data.vacationId)}/>
                         </div>
                         {user.roleId === 1 && <div>
                             <IconButton onClick={handleClick}> <MoreVertIcon /> </IconButton>

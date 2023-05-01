@@ -18,7 +18,7 @@ function Home(): JSX.Element {
     // Pagination
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [pageCount, setPageCount] = useState<number>(1);
-    const cardsPerPage = 5;
+    const cardsPerPage = 10;
     
     const calcPagination = () => {
         const endIndex = (currentPage * cardsPerPage);
@@ -29,7 +29,15 @@ function Home(): JSX.Element {
     
     // On page start data fetch
     useEffect(()=>{
-        dataService.getAllVacations()
+        
+        const localVacations = vacationsStore.getState().vacations;
+        
+        // If there are an vacation store => take data from it
+        if(localVacations.length > 0){
+            setVacations(localVacations);
+            setPageCount(Math.ceil(localVacations.length/cardsPerPage));
+        } else {
+            dataService.getAllVacations()
             .then((v)=>{
                 setVacations(v);
                 setPageCount(Math.ceil(v.length/cardsPerPage));
@@ -38,6 +46,8 @@ function Home(): JSX.Element {
                 notifyService.error(error); 
                 navigate("/greetings"); 
             });
+        }
+        
     },[]);
 
     // On filters change logic (must be in useEffect, since state change is async in React)

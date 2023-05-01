@@ -12,7 +12,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import VacationModel from "../../../Models/VacationsModel";
 import { Avatar, Grid } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import dataService from "../../../Services/DataService";
 import BorderColorIcon from '@mui/icons-material/BorderColor';
@@ -119,7 +119,7 @@ function EditVacation(): JSX.Element {
                             </Grid>
                             
                             <Grid item xs={12}>   
-                            <Link href="/home" variant="body2"> Take me back? </Link>
+                            <NavLink to="/home">Take me back?</NavLink>
                             </Grid>
 
 

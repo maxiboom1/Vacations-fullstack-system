@@ -9,7 +9,7 @@ class VacationModel {
   public endDate: string;
   public price: number;
   public image: UploadedFile; // Image file
-  public imageURL:string
+  public imageUrl:string
 
 
   public constructor(vacation: VacationModel) {
@@ -21,7 +21,7 @@ class VacationModel {
     this.endDate = vacation.endDate;
     this.price = vacation.price;
     this.image = vacation.image;
-    this.imageURL = vacation.imageURL
+    this.imageUrl = vacation.imageUrl
   
   }
 

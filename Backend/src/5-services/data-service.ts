@@ -44,7 +44,7 @@ async function addVacation(vacation: VacationModel): Promise<VacationModel>{
     
     if(vacation.image){
         imageName = await imageHandler.saveFile(vacation.image);
-        vacation.imageURL = appConfig.imagesUrl + imageName;
+        vacation.imageUrl = appConfig.imagesUrl + imageName;
     }
     
     const sql = `INSERT INTO vacations VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)`;
@@ -73,7 +73,7 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel>{
     if (vacation.image) {
         imageName = await imageHandler.updateFile(vacation.image, imageName);
     } 
-    vacation.imageURL = appConfig.imagesUrl + imageName;
+    vacation.imageUrl = appConfig.imagesUrl + imageName;
 
     const sql = `UPDATE vacations SET
     destination = ?,
