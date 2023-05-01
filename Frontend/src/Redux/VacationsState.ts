@@ -8,9 +8,10 @@ export class VacationsState {
 
 export enum VacationsActionType {
     SaveVacations,
-    UpdateFollow,
-    UpdateVacation,
     DeleteVacations,
+    AddVacation,
+    UpdateVacation,
+    UpdateFollow,
     DeleteVacation
 }
 
@@ -25,12 +26,16 @@ export function vacationsReducer(currentState = new VacationsState(), action: Va
 
     switch (action.type) {
 
-        case VacationsActionType.SaveVacations: // Here, the payload is a token
+        case VacationsActionType.SaveVacations: 
             newState.vacations = action.payload;
             break;
+
+        case VacationsActionType.DeleteVacations: 
+            newState.vacations = [];
+            break;
         
-        case VacationsActionType.SaveVacations: // Here, the payload is a token
-            newState.vacations = action.payload;
+        case VacationsActionType.AddVacation: 
+            newState.vacations.push(action.payload);
             break;
 
         case VacationsActionType.UpdateVacation:
@@ -40,12 +45,6 @@ export function vacationsReducer(currentState = new VacationsState(), action: Va
             }
             break;
         
-        case VacationsActionType.DeleteVacation:
-            const indexToRemove = newState.vacations.findIndex( v => v.vacationId === action.payload.vacationId); // Here, the payload is vacationId to remove
-            if(indexToRemove >= 0){ 
-                newState.vacations.splice(indexToRemove, 1); 
-            } 
-            break;
         case VacationsActionType.UpdateFollow:
             const currentUser = authStore.getState().user;
             const index = newState.vacations.findIndex((v)=> v.vacationId === action.payload.vacationId);
@@ -61,6 +60,11 @@ export function vacationsReducer(currentState = new VacationsState(), action: Va
             } else {
                 --newState.vacations[index].followersCount;
             }
+            break;
+        
+        case VacationsActionType.DeleteVacation:
+            const indexToRemove = newState.vacations.findIndex( v => v.vacationId === action.payload.vacationId); // Here, the payload is vacationId to remove
+            if(indexToRemove >= 0){ newState.vacations.splice(indexToRemove, 1); } 
             break;
     }
 

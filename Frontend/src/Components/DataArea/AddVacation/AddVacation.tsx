@@ -1,5 +1,4 @@
 import "./AddVacation.css";
-import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import notifyService from "../../../Services/NotifyService";
 import Button from '@mui/material/Button';
@@ -12,31 +11,28 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import VacationModel from "../../../Models/VacationsModel";
 import { Avatar, Grid } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import dataService from "../../../Services/DataService";
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 const theme = createTheme();
 
 function AddVacation(): JSX.Element {
+    
     const navigate = useNavigate();
     const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
     const {register, handleSubmit} = useForm<VacationModel>();
     
-    async function send(vacation: VacationModel){ 
-        
+    async function send(vacation: VacationModel){   
         try{ 
-            console.log(vacation)
             vacation.image = (vacation.image as unknown as FileList)[0];
-            //await dataService.updateVacation(vacation);                     
+            await dataService.addVacation(vacation);                     
             notifyService.success('Vacation has been updated');
-            //navigate("/home");
-
+            navigate("/home");
         }catch(e:any){
             notifyService.error(e);
         }
-
     }
     
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,16 +67,16 @@ function AddVacation(): JSX.Element {
                             <TextField margin="dense" required fullWidth label="Destination"{...register("destination")} InputLabelProps={{ shrink: true }}   />
                             </Grid>
                             
-                            <Grid item xs={12} sm={4}>
+                            <Grid item xs={12} sm={6}>
                                 <TextField type="date" margin="normal" required fullWidth label="Start date" {...register("startDate")} InputLabelProps={{ shrink: true }}/>
                             </Grid>
                             
-                            <Grid item xs={12} sm={4}> 
+                            <Grid item xs={12} sm={6}> 
                                 <TextField type="date" margin="normal" required fullWidth label="End date" {...register("endDate")} InputLabelProps={{ shrink: true }}/>
                             </Grid>
                             
 
-                            <Grid item xs={12} sm={4}>
+                            <Grid item xs={12}>
                             <TextField type="number" margin="dense" required fullWidth label="Price"{...register("price")} InputLabelProps={{ shrink: true }} />
                             </Grid>
 

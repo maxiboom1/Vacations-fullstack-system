@@ -14,11 +14,13 @@ function Menu():JSX.Element {
     login: () => navigate("/login"),
     logout: ()=> {
       authStore.dispatch({type:AuthActionType.Logout});
-      vacationsStore.dispatch({type:VacationsActionType.DeleteVacations});
       navigate("/greetings");
+      // Set delay to make sure that the components that are subscribed to vacations are destroyed
+      setTimeout(()=>{vacationsStore.dispatch({type:VacationsActionType.DeleteVacations});},100);
     },
     register: () => navigate("/register"),
     add: ()=> navigate("/new"),
+    home:()=> navigate("/home"),
 
   }
   
@@ -26,8 +28,8 @@ function Menu():JSX.Element {
 
   return (
     <div className="Menu">
-      <div>
-        <img src={logo} alt="" />
+      <div className="siteLogo">
+        <img src={logo} alt="" onClick={()=> menuEvents.home()} />
       </div>
       
       <div className="menuItems">

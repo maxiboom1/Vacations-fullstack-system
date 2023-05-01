@@ -1,5 +1,5 @@
 function formatDate(timeString: string): string {
-    
+  console.log(timeString);
   const date = new Date(timeString);
 
   if (isNaN(date.getTime())) {

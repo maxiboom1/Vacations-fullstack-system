@@ -1,6 +1,5 @@
 import axios from "axios";
 import { AuthActionType, authStore } from "../Redux/AuthState";
-import { VacationsActionType, vacationsStore } from "../Redux/VacationsState";
 
 class InterceptorService {
     
@@ -25,8 +24,8 @@ class InterceptorService {
             },
             error => {
               console.log(error);
-              authStore.dispatch({type:AuthActionType.Logout});
-              vacationsStore.dispatch({type: VacationsActionType.DeleteVacations});
+              //authStore.dispatch({type:AuthActionType.Logout});
+              //vacationsStore.dispatch({type: VacationsActionType.DeleteVacations});
             }
           );
 

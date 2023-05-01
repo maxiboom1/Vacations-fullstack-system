@@ -24,6 +24,13 @@ class DataService {
         const updatedVacation = response.data;
         vacationsStore.dispatch({type:VacationsActionType.UpdateVacation, payload: updatedVacation});
     }
+
+    public async addVacation(vacation: VacationModel): Promise<void> {
+        const headers = { "Content-Type": "multipart/form-data" }
+        const response = await axios.post<VacationModel>(appConfig.vacationsURL, vacation, { headers });
+        const addedVacation = response.data;
+        vacationsStore.dispatch({type:VacationsActionType.AddVacation, payload: addedVacation});
+    }
     
     public async updateFollow(vacationId: number, action:number): Promise<void> {
         const data = { vacationId, action };

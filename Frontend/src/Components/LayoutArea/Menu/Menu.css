@@ -19,11 +19,10 @@
     margin: 0px 10px; 
 }
 
-.menuItems span:hover {
+.menuItems span:hover, .siteLogo:hover  {
     color: red; 
     cursor: pointer;
 }
-
 
 .menuItems .userWelcome:hover {
     color: black;
