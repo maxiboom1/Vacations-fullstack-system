@@ -94,7 +94,7 @@ function AddVacation(): JSX.Element {
 
 
                             <Grid item xs={12}>   
-                            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>Update</Button>
+                            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>Add Vacation</Button>
                             </Grid>
                             
                             <Grid item xs={12}>   

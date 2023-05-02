@@ -5,7 +5,6 @@ import UserModel from "../../../Models/UserModel";
 import { authStore } from "../../../Redux/AuthState";
 import notifyService from "../../../Services/NotifyService";
 import authService from "../../../Services/AuthService";
-
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -21,8 +20,9 @@ const theme = createTheme();
 
 function Register(): JSX.Element {
     
-    const {register, handleSubmit} = useForm<UserModel>();
-    
+    // The formState: { errors } used for validation messages in mui
+    const {register, handleSubmit, formState: { errors }} = useForm<UserModel>();
+
     const navigate = useNavigate();
 
     async function send(user: UserModel){ 
@@ -54,13 +54,49 @@ function Register(): JSX.Element {
                         
                         <Box component="form" onSubmit={handleSubmit(send)} noValidate sx={{ mt: 1 }}>
                         
-                            <TextField margin="dense" required fullWidth label="First name"{...register("firstName")} autoComplete="First name" autoFocus />
+                            <TextField 
+                                margin="dense" 
+                                fullWidth 
+                                label="First name"   
+                                {...register("firstName", {required: "First name is required"})}
+                                error={Boolean(errors.firstName)}
+                                helperText={errors.firstName?.message} 
+                                autoComplete="First name" 
+                                autoFocus 
+                            />
                             
-                            <TextField margin="dense" required fullWidth label="Last name" {...register("lastName")} autoComplete="Last name" autoFocus />
+                            <TextField 
+                                margin="dense" 
+                                fullWidth 
+                                label="Last name" 
+                                {...register("lastName", { required: "Last name is required" } )} 
+                                error={Boolean(errors.lastName)}
+                                helperText={errors.lastName?.message} 
+                                autoComplete="Last name" 
+                            />
 
-                            <TextField margin="normal" required fullWidth label="Email" {...register("email")} autoComplete="current-password"/>
+                            <TextField 
+                                margin="normal" 
+                                fullWidth 
+                                label="Email" 
+                                {...register("email", { required: "Email is required",pattern: { 
+                                    value: /^\S+@\S+\.\S+$/, 
+                                    message: "Invalid email address"
+                                    } 
+                                })}
+                                error={Boolean(errors.email)}
+                                helperText={errors.email?.message} 
+                            />
 
-                            <TextField margin="normal" required fullWidth label="Password" {...register("password")} type="password" autoComplete="current-password"/>
+                            <TextField 
+                                margin="normal" 
+                                fullWidth 
+                                type="password" 
+                                label="Password" 
+                                {...register("password", { required: "Password is required", minLength: {value:4, message:"Must be at least 4 symbols"}} )} 
+                                error={Boolean(errors.password)}
+                                helperText={errors.password?.message} 
+                            />
 
                             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>Register</Button>
                             
@@ -70,7 +106,7 @@ function Register(): JSX.Element {
 
                     </Box>
 
-                    </Container>
+                </Container>
 
             </ThemeProvider>
 
