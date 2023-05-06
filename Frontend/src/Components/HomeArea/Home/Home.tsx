@@ -11,43 +11,25 @@ import { Checkbox, FormControlLabel, Pagination, Stack } from "@mui/material";
 
 function Home(): JSX.Element {
     
-    const navigate = useNavigate();     
-    const [vacations, setVacations] = useState<VacationModel[]>([]);
-    const [activeFilters, setActiveFilters] = useState([]);
+    const navigate = useNavigate();      
+    const [vacations, setVacations] = useState<VacationModel[]>([]); // Used to store vacations arr    
+    const [activeFilters, setActiveFilters] = useState([]); // Used to store selected filter, onchange invokes filters useEffect 
 
     // Pagination
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [pageCount, setPageCount] = useState<number>(1);
     const cardsPerPage = 10;
     
-    const calcPagination = () => {
+    const calcPagination = (v: VacationModel[]) => {
         const endIndex = (currentPage * cardsPerPage);
         const startIndex = endIndex - cardsPerPage ; 
-        return vacations.slice(startIndex, endIndex);
+        return v.slice(startIndex, endIndex);
     };
-    const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => { setCurrentPage(value); };
-    
-    // We run this init func onload and on vacations change 
-    async function updateVacations(){
         
-        let v = vacationsStore.getState().vacations;
-        if(v.length === 0 ){ 
-            try{
-                v = await dataService.getAllVacations(); 
-            }catch(err: any){
-                notifyService.error(err);
-                navigate("/greetings");
-            }
-        }
-        
-        setVacations(v);
-        setPageCount(Math.ceil(v.length/cardsPerPage));
-        setCurrentPage(1);
-    }
-
     // On page start data fetch
     useEffect(()=>{
-        // On load - take and render the vacations data from store/AJAX
+        
+        // On load - take and render the vacations data from localStore/AJAX
         updateVacations();
         // On each store change, update and render data
         const unsubscribe = vacationsStore.subscribe(updateVacations);
@@ -56,40 +38,75 @@ function Home(): JSX.Element {
         
     },[]);
 
-
-    // On filters change logic (must be in useEffect, since state change is async in React)
+    // Triggered on activeFilters state change
     useEffect(()=>{
+
+        // Get full vacation arr from local store
+        const allVacations:VacationModel[] = vacationsStore.getState().vacations;
         
-        const currentVacations:VacationModel[] = vacationsStore.getState().vacations;
         const now = new Date();
         
+        // Filter func, includes filter options, returns booleans
         const filterPredicates = {
             isFollowing: (v: VacationModel) => v.isFollowing ===1,
             actualVacations: (v: VacationModel) => new Date(v.startDate) > now,
             startedVacations: (v: VacationModel) => (new Date(v.startDate) < now) && (new Date(v.endDate) > now),
         };
         
+        // Pass v thru selected filters, and returns true if v passed the filterPredicate func
         const combinedFilter = (v:VacationModel) => {  
             return activeFilters.every((filter) => filterPredicates[filter as keyof typeof filterPredicates](v));
         };
         
-        const filtered = currentVacations.filter(combinedFilter); 
-        setVacations(filtered);
+        // Pass vacations to combinedFilter=>filterPredicates, and if gets true, adds this v to filtered arr.
+        const filtered = allVacations.filter(combinedFilter);
+
+        setVacations(calcPagination(filtered));
         setPageCount(Math.ceil(filtered.length/cardsPerPage));
+
+    },[activeFilters]); 
+
+    // Triggered on currentPage state change
+    useEffect(()=>{
+        
+        const allVacations:VacationModel[] = vacationsStore.getState().vacations;
+
+        setVacations(calcPagination(allVacations));
+
+    },[currentPage]);
+
+    // We run this init func onload and on vacations change 
+    async function updateVacations(){
+        
+        let v = vacationsStore.getState().vacations;
+        
+        // Send ajax to server only if local store is empty
+        if(v.length === 0 ){ 
+            try{
+                v = await dataService.getAllVacations(); 
+            }catch(err: any){
+                notifyService.error(err);
+                navigate("/greetings"); // On error, send user back to start
+            }
+        }
+        
+        setPageCount(Math.ceil(v.length/cardsPerPage));
+        setVacations(calcPagination(v));
         setCurrentPage(1);
-
-
-    },[activeFilters]);
+    }
 
     // User check action will setActiveFilter state, and that will trigger useEffect that subscribed to activeFilters state (see above).
     function handleFilterChange(name: string, checked: boolean){
         if(checked){
-            setActiveFilters(prevFilters => [...prevFilters, name]); 
+            setActiveFilters(prevFilters => [...prevFilters, name]); // Add new filter to active filters state (using spread operator)
+
         } else {
-            setActiveFilters(prevFilters => prevFilters.filter(f => f !== name));
+            setActiveFilters(prevFilters => prevFilters.filter(f => f !== name)); // Remove unselected filter from active filters state
         }
     }
         
+    const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => { setCurrentPage(value); };
+
     return (
         
  
@@ -106,9 +123,9 @@ function Home(): JSX.Element {
         <div className="cardsBox">
             <br />
             <h2>Available Vacations:</h2>
-            <div >{calcPagination().map((v) => (<CardUI data={v} key={v.vacationId} />))}</div>
+            <div >{vacations.map((v) => (<CardUI data={v} key={v.vacationId} />))}</div>
 
-            {vacations.length > cardsPerPage&&<div className="paginationController">
+            {pageCount > 1 && <div className="paginationController">
                 <Stack spacing={1}>
                     <Pagination count={pageCount} variant="outlined" shape="rounded" page={currentPage} onChange={handlePageChange}/>
                 </Stack>

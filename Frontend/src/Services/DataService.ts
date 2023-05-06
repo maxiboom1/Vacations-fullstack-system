@@ -39,9 +39,7 @@ class DataService {
 
     public async deleteVacation(vacationId: number): Promise<void> {
         await axios.delete(appConfig.vacationsURL + vacationId);
-        console.log('delete done');
         vacationsStore.dispatch({type: VacationsActionType.DeleteVacation, payload: vacationId});
-        console.log('redux done');
     }
 }
 

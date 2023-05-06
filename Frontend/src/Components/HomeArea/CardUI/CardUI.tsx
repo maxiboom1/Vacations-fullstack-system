@@ -37,7 +37,7 @@ function CardUI(props: VacationProps): JSX.Element {
         
         return () => unsubscribe();
 
-    },[data.isFollowing, data.followersCount]);
+    },[]);
    
     async function handleLike(vacationId: number){
         
@@ -80,7 +80,6 @@ function CardUI(props: VacationProps): JSX.Element {
             await dataService.deleteVacation(vacationId);
             notifyService.success(`Vacation removed`);
         }catch(err: any){
-            console.log(err);
             notifyService.error(err);
         }
     }
