@@ -2,8 +2,7 @@
 
 -----Vacations:
  
-Its images backup folder with corresponding imagenames is in:
-\Backend\src\1-assets\images\media backup
+Images backup with hashed filenames folder included here.
 
 -----Users:
 
