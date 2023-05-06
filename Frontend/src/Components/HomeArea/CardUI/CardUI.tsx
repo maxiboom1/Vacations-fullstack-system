@@ -21,13 +21,13 @@ function CardUI(props: VacationProps): JSX.Element {
     const navigate = useNavigate();
 
     const {data} = props; // extract vacation from VacationProps
-    
+
     const [isFollowing, setIsFollowing] = useState<number>(data.isFollowing);
 
     const [followersCount, setFollowersCount] = useState<number>(data.followersCount);
     
     useEffect(()=>{
-
+        
         const unsubscribe = vacationsStore.subscribe(()=>{
             const localVacations = vacationsStore.getState().vacations;
             const index = localVacations.findIndex((v)=> v.vacationId === data.vacationId);
