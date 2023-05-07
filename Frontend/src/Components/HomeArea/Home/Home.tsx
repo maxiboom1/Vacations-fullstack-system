@@ -34,7 +34,9 @@ function Home(): JSX.Element {
         const unsubscribe = vacationsStore.subscribe(()=>{
             console.log('subscribe');
             const newVacations = vacationsStore.getState().vacations;           
-            if(newVacations.length != allVacations.length ){ fetchData(newVacations);}
+            if(newVacations.length != allVacations.length ){ 
+                fetchData(newVacations);
+            }
         });
         
         return () => unsubscribe();
@@ -64,20 +66,20 @@ function Home(): JSX.Element {
             
             const now = new Date();
             
-            // Filter func, includes filter options, returns booleans
+            // Filter object with functions, returns booleans
             const filterPredicates = {
                 isFollowing: (v: VacationModel) => v.isFollowing ===1,
                 actualVacations: (v: VacationModel) => new Date(v.startDate) > now,
                 startedVacations: (v: VacationModel) => (new Date(v.startDate) < now) && (new Date(v.endDate) > now),
             };
             
-            // Pass v thru selected filters, and returns true if v passed the filterPredicate func
-            const combinedFilter = (v:VacationModel) => {  
+            // Pass v thru selected filters, and returns true if v passed the filterPredicate obj of functions
+            const selectedFilter = (v:VacationModel) => {  
                 return activeFilters.every((filter) => filterPredicates[filter as keyof typeof filterPredicates](v));
             };
             
             // Pass vacations to combinedFilter=>filterPredicates, and if gets true, adds this v to filtered arr.
-            const filtered = data.filter(combinedFilter);
+            const filtered = data.filter(selectedFilter);
             
             setCachedVacations([...filtered]); console.log('filter setCachedVacations');
             setVacations([...calcPagination(filtered)]);
