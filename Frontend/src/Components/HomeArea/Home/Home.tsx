@@ -78,7 +78,7 @@ function Home(): JSX.Element {
                 return activeFilters.every((filter) => filterPredicates[filter as keyof typeof filterPredicates](v));
             };
             
-            // Pass vacations to combinedFilter=>filterPredicates, and if gets true, adds this v to filtered arr.
+            // Pass vacations to selectedFilter=>filterPredicates, and if gets true, adds this v to filtered arr.
             const filtered = data.filter(selectedFilter);
             
             setCachedVacations([...filtered]); console.log('filter setCachedVacations');
