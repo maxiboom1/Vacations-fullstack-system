@@ -5,62 +5,58 @@ import VacationModel from "../../../Models/VacationsModel";
 import notifyService from "../../../Services/NotifyService";
 import CardUI from "../CardUI/CardUI";
 import { vacationsStore } from "../../../Redux/VacationsState";
-import appConfig from "../../../Utils/AppConfig";
 import { Checkbox, FormControlLabel, Pagination, Stack } from "@mui/material";
 
+// Instead pass raw values from filter checkboxes, we use enum to avoid bugs/improve security 
+enum filters {
+    IS_FOLLOWING = 'isFollowing',
+    ACTUAL_VACATIONS = 'actualVacations',
+    STARTED_VACATIONS = 'startedVacations',
+    }
+
 function Home(): JSX.Element {
-    const [cache,setCache] = useState<VacationModel[]>([]);
-    const [vacations, setVacations] = useState<VacationModel[]>([]); // Used to store vacations arr to print   
-    const [activeFilters, setActiveFilters] = useState([]); // Used to store selected filter, onchange invokes filters useEffect 
-    
+    const [vacations, setVacations] = useState<VacationModel[]>([]); 
+    const [activeFilters, setActiveFilters] = useState([]); 
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [pageCount, setPageCount] = useState<number>(1);
     const cardsPerPage = 10;
-    const calcPagination = (v: VacationModel[]) => {
+    const calcPagination = () => {
         const endIndex = (currentPage * cardsPerPage);
         const startIndex = endIndex - cardsPerPage ; 
-        return v.slice(startIndex, endIndex);
+        return vacations.slice(startIndex, endIndex);
     };
-        
-    useEffect(()=>{ 
-        console.log("useEffect: start")         
-        fetchData();
-    },[]);
-
     
-    useEffect(()=>{
+    // Onload, runs once
+    useEffect(()=>{ 
+        
+        // Get data and render
+        dataService.getAllVacations()
+            .then((data)=>{
+                setPageCount(Math.ceil(data.length/cardsPerPage)); 
+                setVacations(data);
+            })
+            .catch((err: any)=>{
+                notifyService.error(err);
+            })
+        
+        // Subscribe to vacations store to set updates 
         const unsubscribe = vacationsStore.subscribe(()=>{
-        console.log('subscribe');
-        console.log('cache: ' , cache);
-
-        const data = vacationsStore.getState().vacations;
-        if(data.length != cache.length){
-            console.log('array changed',data.length, cache.length );
-        }
-        setPageCount(Math.ceil(data.length/cardsPerPage)); 
-        setVacations(calcPagination(data));
+            const data = vacationsStore.getState().vacations;   
+            setVacations([...data]);
         });
 
+        // Kill subscribe on page destroy
         return () => unsubscribe();
 
     },[]);
 
-    async function fetchData(){   
-        console.log('fetch');
-        try{
-            const data = await dataService.getAllVacations();
-            setPageCount(Math.ceil(data.length/cardsPerPage)); 
-            setVacations([...calcPagination(data)]);
-            setCache([...data]);
-
-        }catch(err: any){
-            notifyService.error(err);
-        }     
-    }
-
+    // Listens for changes on activeFilter
     useEffect(()=>{
-        console.log("useEffect: filter")         
-        const data:VacationModel[] = vacationsStore.getState().vacations; 
+        
+        // Not efficient (but straightforward), since we run thru all array each filter select, 
+        // even if we have filtered part of it => should optimize it but it not so simple, we have 3 steps here.
+        // So, basically we can use current vacations only on steps-in, but on steps-out we need all data.
+        const data:VacationModel[] = vacationsStore.getState().vacations;  
         const now = new Date();
         
         // Filter object with functions, returns booleans
@@ -75,22 +71,16 @@ function Home(): JSX.Element {
             return activeFilters.every((filter) => filterPredicates[filter as keyof typeof filterPredicates](v));
         };
         
-        // Pass vacations to selectedFilter=>filterPredicates, and if gets true, adds this v to filtered arr.
+        // Filter vacations
         const filtered = data.filter(selectedFilter);
         
-        setVacations([...calcPagination(filtered)]);
+        setVacations(filtered);
         setPageCount(Math.ceil(filtered.length/cardsPerPage));
-        setCurrentPage(1);
-
-    },[activeFilters]); 
-
-    useEffect(()=>{
-        console.log("useEffect: pagination");        
-        setVacations([...calcPagination(vacationsStore.getState().vacations)]);
-    },[currentPage]);
+        setCurrentPage(1);    
     
+    },[activeFilters]);
 
-    // User check action will setActiveFilter state, and that will trigger useEffect that subscribed to activeFilters state (see above).
+    // Change on activeFilter will trigger useEffect with activeFilter dependency and run filter logic
     function handleFilterChange(name: string, checked: boolean){
         if(checked){
             setActiveFilters(prevFilters => [...prevFilters, name]); // Add new filter to active filters state (using spread operator)
@@ -99,333 +89,47 @@ function Home(): JSX.Element {
             setActiveFilters(prevFilters => prevFilters.filter(f => f !== name)); // Remove unselected filter from active filters state
         }
     }
-        
-    const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => { 
-        setCurrentPage(value); 
-    };
+     
+    // Pages navigation handler
+    const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => { setCurrentPage(value); };
 
     return (
         
- 
-    <div className="Home">
+        <div className="Home">
+            
+            {/* Filter bar */}
+            
+            <div className="filterMenu">
+                <span style={{marginRight:"20px"}}>Filters:</span>
+                <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(filters.IS_FOLLOWING, (event.target as HTMLInputElement).checked)} label="Favorites" />
+                <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(filters.ACTUAL_VACATIONS, (event.target as HTMLInputElement).checked)} label="Actual" />
+                <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(filters.STARTED_VACATIONS, (event.target as HTMLInputElement).checked)} label="Started" />
+            </div>
         
-        <div className="filterMenu">
-            <span style={{marginRight:"20px"}}>Filters:</span>
-            <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(appConfig.filters.IS_FOLLOWING, (event.target as HTMLInputElement).checked)} label="Favorites" />
-            <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(appConfig.filters.ACTUAL_VACATIONS, (event.target as HTMLInputElement).checked)} label="Actual" />
-            <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(appConfig.filters.STARTED_VACATIONS, (event.target as HTMLInputElement).checked)} label="Started" />
+            <div className="cardsBox">
+
+                {/* Data area */}
+
+                <br />
+                <h2>Vacations:</h2>
+                <div >{calcPagination().map((v) => (<CardUI data={v} key={v.vacationId} />))}</div>
+                
+                
+                {/* Pagination bar */}
+                
+                {pageCount > 1 && 
+                    <div className="paginationController">
+                        <Stack spacing={1}>
+                            <Pagination count={pageCount} variant="outlined" shape="rounded" page={currentPage} onChange={handlePageChange}/>
+                        </Stack>
+                    </div>
+                }
+
+            </div>
 
         </div>
-       
-        <div className="cardsBox">
-            <br />
-            <h2>Available Vacations:</h2>
-            <div >{vacations.map((v) => (<CardUI data={v} key={v.vacationId} />))}</div>
-
-            {pageCount > 1 && <div className="paginationController">
-                <Stack spacing={1}>
-                    <Pagination count={pageCount} variant="outlined" shape="rounded" page={currentPage} onChange={handlePageChange}/>
-                </Stack>
-            </div>}
-
-        </div>
-
-    </div>
     );
 }
 
 export default Home;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import "./Home.css";
-// import { useEffect, useState } from "react";
-// import dataService from "../../../Services/DataService";
-// import VacationModel from "../../../Models/VacationsModel";
-// import notifyService from "../../../Services/NotifyService";
-// import CardUI from "../CardUI/CardUI";
-// import { vacationsStore } from "../../../Redux/VacationsState";
-// import appConfig from "../../../Utils/AppConfig";
-// import { Checkbox, FormControlLabel, Pagination, Stack } from "@mui/material";
-
-// function Home(): JSX.Element {
-    
-//     const [cachedVacations, setCachedVacations] = useState<VacationModel[]>([]);
-//     const [allVacations, setAllVacations] = useState<VacationModel[]>([]);
-//     const [vacations, setVacations] = useState<VacationModel[]>([]); // Used to store vacations arr to print   
-//     const [activeFilters, setActiveFilters] = useState([]); // Used to store selected filter, onchange invokes filters useEffect 
-    
-//     // Pagination
-//     const [currentPage, setCurrentPage] = useState<number>(1);
-//     const [pageCount, setPageCount] = useState<number>(1);
-//     const cardsPerPage = 5;
-//     const calcPagination = (v: VacationModel[]) => {
-//         const endIndex = (currentPage * cardsPerPage);
-//         const startIndex = endIndex - cardsPerPage ; 
-//         return v.slice(startIndex, endIndex);
-//     };
-        
-//     // On page start data fetch
-//     useEffect(()=>{ 
-//         console.log("useEffect: start")         
-//         const data = vacationsStore.getState().vacations;
-//         fetchData(data);
-
-//         const unsubscribe = vacationsStore.subscribe(()=>{
-//             console.log('subscribe');
-//             const newVacations = vacationsStore.getState().vacations;           
-//             if(newVacations.length != allVacations.length ){ 
-//                 fetchData(newVacations);
-//             }
-//         });
-        
-//         return () => unsubscribe();
-
-//     },[]);
-
-//     async function fetchData(v:VacationModel[]){
-        
-//         console.log('fetch');
-                
-//         if(v.length === 0){
-//             await dataService.getAllVacations().then((data)=>{v = [...data]}).catch((err)=>{notifyService.error(err);})
-//         }
-        
-//         setVacations([...calcPagination(v)]);
-//         setPageCount(Math.ceil(v.length/cardsPerPage));
-//         setCachedVacations([...v]);
-//         setAllVacations([...v]);        
-//     }
-
-//     // Triggered on activeFilters state change
-//     useEffect(()=>{
-//         console.log("useEffect: filter")         
-//         const data:VacationModel[] = vacationsStore.getState().vacations;
-//         if(activeFilters.length > 0){
-//             // Get full vacation arr from local store 
-            
-//             const now = new Date();
-            
-//             // Filter object with functions, returns booleans
-//             const filterPredicates = {
-//                 isFollowing: (v: VacationModel) => v.isFollowing ===1,
-//                 actualVacations: (v: VacationModel) => new Date(v.startDate) > now,
-//                 startedVacations: (v: VacationModel) => (new Date(v.startDate) < now) && (new Date(v.endDate) > now),
-//             };
-            
-//             // Pass v thru selected filters, and returns true if v passed the filterPredicate obj of functions
-//             const selectedFilter = (v:VacationModel) => {  
-//                 return activeFilters.every((filter) => filterPredicates[filter as keyof typeof filterPredicates](v));
-//             };
-            
-//             // Pass vacations to selectedFilter=>filterPredicates, and if gets true, adds this v to filtered arr.
-//             const filtered = data.filter(selectedFilter);
-            
-//             setCachedVacations([...filtered]); console.log('filter setCachedVacations');
-//             setVacations([...calcPagination(filtered)]);
-//             setPageCount(Math.ceil(filtered.length/cardsPerPage));
-//             setCurrentPage(1);
-//         } else {
-//             setCachedVacations([...data]); console.log('filter bypass setCachedVacations');
-//             setVacations([...calcPagination(data)]);
-//             setPageCount(Math.ceil(data.length/cardsPerPage));
-//             setCurrentPage(1);
-//         }
-
-//     },[activeFilters]); 
-
-//     // Triggered on currentPage state change
-//     useEffect(()=>{
-        
-//         console.log("useEffect: pagination",cachedVacations);        
-//         setVacations([...calcPagination(cachedVacations)]);
-
-//     },[currentPage, cachedVacations]);
-
-//     // User check action will setActiveFilter state, and that will trigger useEffect that subscribed to activeFilters state (see above).
-//     function handleFilterChange(name: string, checked: boolean){
-//         if(checked){
-//             setActiveFilters(prevFilters => [...prevFilters, name]); // Add new filter to active filters state (using spread operator)
-
-//         } else {
-//             setActiveFilters(prevFilters => prevFilters.filter(f => f !== name)); // Remove unselected filter from active filters state
-//         }
-//     }
-        
-//     const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => { setCurrentPage(value); };
-
-//     return (
-        
- 
-//     <div className="Home">
-        
-//         <div className="filterMenu">
-//             <span style={{marginRight:"20px"}}>Filters:</span>
-//             <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(appConfig.filters.IS_FOLLOWING, (event.target as HTMLInputElement).checked)} label="Favorites" />
-//             <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(appConfig.filters.ACTUAL_VACATIONS, (event.target as HTMLInputElement).checked)} label="Actual" />
-//             <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(appConfig.filters.STARTED_VACATIONS, (event.target as HTMLInputElement).checked)} label="Started" />
-
-//         </div>
-       
-//         <div className="cardsBox">
-//             <br />
-//             <h2>Available Vacations:</h2>
-//             <div >{vacations.map((v) => (<CardUI data={v} key={v.vacationId} />))}</div>
-
-//             {pageCount > 1 && <div className="paginationController">
-//                 <Stack spacing={1}>
-//                     <Pagination count={pageCount} variant="outlined" shape="rounded" page={currentPage} onChange={handlePageChange}/>
-//                 </Stack>
-//             </div>}
-
-//         </div>
-
-//     </div>
-//     );
-// }
-
-// export default Home;

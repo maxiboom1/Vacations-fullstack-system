@@ -5,11 +5,6 @@ enum URL {
     FOLLOW = 'http://localhost:4000/api/follow/',
     SOCKET = 'http://localhost:4001',
   }
-enum Filters {
-    IS_FOLLOWING = 'isFollowing',
-    ACTUAL_VACATIONS = 'actualVacations',
-    STARTED_VACATIONS = 'startedVacations',
-    }
 
 class AppConfig {
     
@@ -18,7 +13,6 @@ class AppConfig {
     public vacationsURL = URL.VACATIONS;
     public followURL = URL.FOLLOW;
     public socketURL = URL.SOCKET;
-    public filters = Filters;
 }
 
 
