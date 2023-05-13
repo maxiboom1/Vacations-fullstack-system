@@ -20,7 +20,12 @@ function Menu():JSX.Element {
     },
     register: () => navigate("/register"),
     add: ()=> navigate("/new"),
-    home:()=> navigate("/home"),
+    home:()=> {
+      if(user){
+        navigate("/home");
+      }
+      
+    },
 
   }
   

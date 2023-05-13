@@ -4,6 +4,7 @@ import { authStore } from "./AuthState";
 
 export class VacationsState {
     public vacations: VacationModel[] = [];
+    public lastAction: string = ""; // add lastAction property
 }
 
 export enum VacationsActionType {
@@ -23,7 +24,7 @@ export interface VacationsAction {
 export function vacationsReducer(currentState = new VacationsState(), action: VacationsAction): VacationsState {
 
     const newState = { ...currentState };
-
+    
     switch (action.type) {
 
         case VacationsActionType.SaveVacations: 
@@ -67,6 +68,9 @@ export function vacationsReducer(currentState = new VacationsState(), action: Va
             if(indexToRemove >= 0){ newState.vacations.splice(indexToRemove, 1); } 
             break;
     }
+    
+    newState.lastAction = VacationsActionType[action.type]; // set the value of lastAction to the current action type
+    
     return newState;
 }
 

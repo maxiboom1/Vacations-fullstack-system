@@ -6,6 +6,9 @@ import notifyService from "../../../Services/NotifyService";
 import CardUI from "../CardUI/CardUI";
 import { vacationsStore } from "../../../Redux/VacationsState";
 import { Checkbox, FormControlLabel, Pagination, Stack } from "@mui/material";
+import NoItemsFound from "../NoItemsFound/NoItemsFound";
+import { authStore } from "../../../Redux/AuthState";
+import { useNavigate } from "react-router-dom";
 
 // Instead pass raw values from filter checkboxes, we use enum to avoid bugs/improve security 
 enum filters {
@@ -15,6 +18,10 @@ enum filters {
     }
 
 function Home(): JSX.Element {
+    
+    const user = authStore.getState().user;
+    const navigate = useNavigate();
+    
     const [vacations, setVacations] = useState<VacationModel[]>([]); 
     const [activeFilters, setActiveFilters] = useState([]); 
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -29,6 +36,11 @@ function Home(): JSX.Element {
     // Onload, runs once
     useEffect(()=>{ 
         
+        if(!user){ 
+            navigate("/greetings"); 
+            notifyService.error('Access denied - invalid user')
+            return;
+        }
         // Get data and render
         dataService.getAllVacations()
             .then((data)=>{
@@ -41,8 +53,14 @@ function Home(): JSX.Element {
         
         // Subscribe to vacations store to set updates 
         const unsubscribe = vacationsStore.subscribe(()=>{
-            const data = vacationsStore.getState().vacations;   
-            setVacations([...data]);
+            
+            const action = vacationsStore.getState().lastAction;
+
+            if(action === "DeleteVacation"){
+                const data = vacationsStore.getState().vacations;   
+                setVacations([...data]);
+            }
+        return ()=> unsubscribe(); 
         });
 
         // Kill subscribe on page destroy
@@ -111,9 +129,11 @@ function Home(): JSX.Element {
                 {/* Data area */}
 
                 <br />
-                <h2>Vacations:</h2>
-                <div >{calcPagination().map((v) => (<CardUI data={v} key={v.vacationId} />))}</div>
+                {vacations.length>0 && <h2>Vacations:</h2>}
+                <div>{calcPagination().map((v) => (<CardUI data={v} key={v.vacationId} />))}</div>
                 
+                {/* The 2-nd condition makes sure that it will be visible only when redux not empty (so i won't see this on page load) */}
+                {vacations.length === 0 && vacationsStore.getState().vacations.length > 0 && < NoItemsFound />}
                 
                 {/* Pagination bar */}
                 
