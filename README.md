@@ -112,11 +112,14 @@ The following are the required agreements for the system. The user interface dis
 - On the Y-axis, display the number of followers for each vacation.
 
 ### Creating and downloading a CSV file containing vacation destinations and the number of followers.
-CSV stands for Comma-Separated Values, and it is a text file that contains values separated by commas. What is special about this file is that Excel can open it and display its information in a tabular format.
-CSV file structure:
+CSV stands for Comma-Separated Values, and it is a text file that contains values separated by commas. What is special about this file is that Excel can open it and display its information in a tabular format.  
+
+CSV file structure:  
+
 ![csv](/snapshots/csv.JPG)
 
-Opening the file in Excel:
+Opening the file in Excel:  
+
 ![excel](/snapshots/excell.JPG)
 
 - This option is only available to the admin.
