@@ -68,7 +68,6 @@ function verifyToken(request: Request, adminCheck?: boolean): boolean {
     return true;
 }
 
-
 export default {
     createToken,
     decodeToken,
