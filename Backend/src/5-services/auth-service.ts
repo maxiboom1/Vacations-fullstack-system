@@ -6,6 +6,7 @@ import RoleModel from "../2-models/role-model";
 import cyber from "../4-utils/cyber";
 import CredentialsModel from "../2-models/credentials-model";
 
+//Register - gets user, checks if email not taken, write to DB, create && return token.
 async function register(user: UserModel): Promise<string>{
 
     const isTaken = await isEmailTaken(user.email);
@@ -26,6 +27,7 @@ async function register(user: UserModel): Promise<string>{
 
 }
 
+// Get credentials => hash given password, get this user from DB, if not exists throw err, create && return token.
 async function login(cred: CredentialsModel): Promise<string>{
 
     const sql = `SELECT * FROM users WHERE email = ? AND password = ?`;
@@ -44,6 +46,7 @@ async function login(cred: CredentialsModel): Promise<string>{
 
 }
 
+// Get email, check if exists in DB, return true if email taken.
 async function isEmailTaken(email: string): Promise<boolean> {
     
     const sql = `SELECT EXISTS(SELECT * FROM users WHERE email = ?) AS isTaken`;
