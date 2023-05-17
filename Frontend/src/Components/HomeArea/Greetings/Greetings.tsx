@@ -1,5 +1,10 @@
 import "./Greetings.css";
-import img from "../../../Assets/Images/home-image1.jpg"
+import img from "../../../Assets/Images/home-image1.jpg";
+
+import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import MouseIcon from '@mui/icons-material/Mouse';
+import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
+
 import { useNavigate } from "react-router-dom";
 import { authStore } from "../../../Redux/AuthState";
 import { useEffect } from "react";
@@ -22,7 +27,7 @@ function Greetings(): JSX.Element {
 
     return (
         
-        <div className="Greetings container mt-5 ">
+        <div className="Greetings ">
             
             <div className="welcome">
                 <img src={img} alt=""/>
@@ -34,11 +39,41 @@ function Greetings(): JSX.Element {
             </div>
 
             <div className="bottomTab">
-                <p>Welcome to Paradise Getaways! 
-                Discover your dream vacation with us. From serene beaches to thrilling adventures,
-                we have it all. Unwind, explore, and indulge in unforgettable experiences. 
-                 Let us turn your travel dreams into reality. Book now and create memories that last a lifetime.</p>
+
+                <div>
+                    <MouseIcon style={{ fontSize: '40px', marginBottom: '10px' }} className="icon1" ></MouseIcon>
+                    <h3>Choose vacation in 3 clicks</h3>
+                    <p>Welcome to Paradise Getaways! 
+                        Discover your dream vacation with us. From serene beaches to thrilling adventures,
+                        we have it all. Unwind, explore, and indulge in unforgettable experiences. 
+                        Let us turn your travel dreams into reality. Book now and create memories that last a lifetime.
+                    </p>
+                </div>   
+
+
+                <div>
+                    <PublishedWithChangesIcon style={{ fontSize: '40px', marginBottom: '10px' }} className="icon1" ></PublishedWithChangesIcon>
+                    <h3>Change your mind?</h3>
+                    <p>Our cancellation policy is designed to provide flexibility and peace of mind. We understand that plans can change. 
+                        Rest assured, we offer flexible cancellation options to accommodate unexpected circumstances. 
+                        Refer to our cancellation policy for more details on how to modify or cancel your booking.
+                    </p>
+                </div>   
+                
+                <div>
+                    <SupportAgentIcon style={{ fontSize: '40px', marginBottom: '10px' }} className="icon1"></SupportAgentIcon>
+                    <h3>We are here!</h3>
+                    <p>Experience our exceptional service. We are here to assist you every step of the way. 
+                        Contact us for any inquiries, support, or assistance you may need during your vacation planning. 
+                        Our dedicated team is committed to ensuring your travel experience is seamless and memorable.
+                    </p>
+                </div> 
+                    
+
+             
+                
             </div>
+
             
         </div>
     );

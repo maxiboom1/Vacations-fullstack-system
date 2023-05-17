@@ -1,7 +1,7 @@
 .Menu{
-    background-color: rgb(196, 241, 255);
+    background-color: rgb(82, 94, 167);
     box-sizing: border-box; 
-    color:black;
+    color:rgba(15, 233, 51, 0.808);
     height: 100%;
     display: flex;
     justify-content: space-between;
@@ -17,15 +17,16 @@
 .menuItems > span{
     font-size: larger;
     margin: 0px 10px; 
+
 }
 
 .menuItems span:hover, .siteLogo:hover  {
-    color: red; 
+    color: rgb(15, 233, 51);
     cursor: pointer;
 }
 
 .menuItems .userWelcome:hover {
-    color: black;
+    color: rgb(0, 0, 0);
     cursor: default;
 
 }

@@ -23,6 +23,8 @@ function Menu():JSX.Element {
     home:()=> {
       if(user){
         navigate("/home");
+      } else {
+        navigate("/greetings");
       }
       
     },
