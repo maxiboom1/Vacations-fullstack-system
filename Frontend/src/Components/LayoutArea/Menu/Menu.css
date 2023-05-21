@@ -31,3 +31,10 @@
 
 }
 
+/* For screen above 800px */
+@media (max-width: 800px) {
+.siteLogo{
+    display: none;
+}
+  }
+
