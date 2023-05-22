@@ -18,8 +18,11 @@ server.use("/api", dataRoutes);
 server.use(routeNotFound);
 server.use(catchAll);
 
-server.listen(appConfig.port, () => console.log("Listening on http://localhost:" + appConfig.port));
+// Run HTTP server on start:
+server.listen(appConfig.port, () => console.log("HTTP server Listening on http://localhost:" + appConfig.port));
 
-const httpServer = server.listen(appConfig.socketPort, () => console.log("Listening on http://localhost:" + appConfig.socketPort));
+// Create server for socket service:
+const httpServer = server.listen(appConfig.socketPort, () => console.log("Socket server listening on http://localhost:" + appConfig.socketPort));
 
+// Start socket service with giver server:
 socketIoService.init(httpServer);

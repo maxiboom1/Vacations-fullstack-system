@@ -1,5 +1,5 @@
 import "./Menu.css";
-import logo from"../../../Assets/Logo/logo.png";
+import logo from"../../../Assets/Logo/logo1.png";
 import { useNavigate } from "react-router-dom";
 import { AuthActionType, authStore } from "../../../Redux/AuthState";
 import { VacationsActionType, vacationsStore } from "../../../Redux/VacationsState";
@@ -40,10 +40,10 @@ function Menu():JSX.Element {
       </div>
       
       <div className="menuItems">
-        {user && <span className="userWelcome">Welcome, {user.firstName}!</span>}
-        {user?.roleId === 1 && <span onClick={()=> handleMenuClick(MenuItems.ADD)}>Add</span>}
-        {!user && <span onClick={()=> handleMenuClick(MenuItems.LOGIN)}>Login</span> }       
-        {!user && <span onClick={()=> handleMenuClick(MenuItems.REGISTER)}>Register</span>}
+        {user && <span className="userWelcome">Welcome, {user.firstName}! </span>}
+        {user?.roleId === 1 && <span onClick={()=> handleMenuClick(MenuItems.ADD)}>Add </span>}
+        {!user && <span onClick={()=> handleMenuClick(MenuItems.LOGIN)}>Login </span> }       
+        {!user && <span onClick={()=> handleMenuClick(MenuItems.REGISTER)}>Register </span>}
         {user && <span onClick={()=> handleMenuClick(MenuItems.LOGOUT)}>Logout</span>}
 
       </div>

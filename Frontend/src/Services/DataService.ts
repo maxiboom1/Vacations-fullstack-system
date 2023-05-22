@@ -8,6 +8,7 @@ class DataService {
     public async getAllVacations(): Promise<VacationModel[]> {
         const response = await axios.get<VacationModel[]>(appConfig.vacationsURL);
         const vacations = response.data; 
+        // sort data by start date!
         vacationsStore.dispatch({type: VacationsActionType.SaveVacations, payload:vacations});
         return vacations;
     }

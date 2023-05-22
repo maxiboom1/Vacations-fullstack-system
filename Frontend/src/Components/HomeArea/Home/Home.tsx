@@ -38,7 +38,7 @@ function Home(): JSX.Element {
         
         if(!user){ 
             navigate("/greetings"); 
-            notifyService.error('Access denied - invalid user')
+            notifyService.error('You are not logged in');
             return;
         }
         // Get data and render

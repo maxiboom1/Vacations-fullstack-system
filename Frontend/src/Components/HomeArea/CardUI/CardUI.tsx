@@ -41,6 +41,9 @@ function CardUI(props: VacationProps): JSX.Element {
    
     async function handleLike(vacationId: number){
         
+        // Prevent admin to create follows:
+        if (user.roleId === 1) return;
+        
         try{
 
             const v = vacationsStore.getState().vacations;
@@ -107,9 +110,9 @@ function CardUI(props: VacationProps): JSX.Element {
                     </div>                   
                 
                     <span className="vacationPrice">Only {data.price}$</span>
-                    
+                    <hr />
                     <div className="controlBar">
-                        <div className="likesBar">
+                        <div className="likesBar" style={{color: user.roleId ===1 ? "gray": ""}}>
                             <span>{followersCount}</span>
                             <FavoriteIcon sx={{ stroke: "#ffffff", strokeWidth: 1 }} style={{color: isFollowing ===1 ? "red": "#da9c9cc9"}} onClick={() => handleLike(data.vacationId)}/>
                         </div>

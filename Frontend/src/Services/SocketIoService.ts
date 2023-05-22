@@ -6,6 +6,7 @@ const socketService = io(appConfig.socketURL);
 
 async function startSocketListener(){
     
+    // expected data example: { vacationId: 9, userId: 27, isFollowing: 0 }
     socketService.on('update', (data:any) => {
 
         vacationsStore.dispatch({type: VacationsActionType.UpdateFollow, payload:{

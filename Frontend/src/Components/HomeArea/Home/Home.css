@@ -6,6 +6,7 @@
 }
 
 .cardsBox{
+    padding: 0px 100px;
     box-sizing: border-box;
     overflow: auto;
     height: calc(100vh - 87px); 
@@ -42,3 +43,11 @@
     align-items: center;
     margin-bottom: 20px;
 }
+
+/* For screen above 800px */
+@media (max-width: 1000px) {
+    .cardsBox{
+        padding: 0px;
+    }
+      }
+    

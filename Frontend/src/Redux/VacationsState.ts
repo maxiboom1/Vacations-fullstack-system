@@ -46,7 +46,7 @@ export function vacationsReducer(currentState = new VacationsState(), action: Va
             }
             break;
         
-        case VacationsActionType.UpdateFollow:
+        case VacationsActionType.UpdateFollow: // payload example: { vacationId: 9, userId: 27, isFollowing: 0 }
             const currentUser = authStore.getState().user;
             const index = newState.vacations.findIndex((v)=> v.vacationId === action.payload.vacationId);
 
