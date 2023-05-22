@@ -42,6 +42,17 @@ function Home(): JSX.Element {
             return;
         }
         // Get data and render
+        let allVacations = vacationsStore.getState().vacations;
+        
+        if(!allVacations){
+            dataService.getAllVacations()
+            .then((data)=>{allVacations = [...data];})
+            .catch((err: any)=>{notifyService.error(err);});
+        }
+        
+        setPageCount(Math.ceil(allVacations.length/cardsPerPage)); 
+        setVacations(allVacations);
+        
         dataService.getAllVacations()
             .then((data)=>{
                 setPageCount(Math.ceil(data.length/cardsPerPage)); 

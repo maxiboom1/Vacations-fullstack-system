@@ -6,6 +6,7 @@ import Register from "../../AuthArea/Register/Register";
 import Greetings from "../../HomeArea/Greetings/Greetings";
 import EditVacation from "../../DataArea/EditVacation/EditVacation";
 import AddVacation from "../../DataArea/AddVacation/AddVacation";
+import Graph from "../../HomeArea/Graph/Graph";
 
 function Routing(): JSX.Element {
     return (
@@ -14,6 +15,7 @@ function Routing(): JSX.Element {
             <Route path="/home" element={<Home />} />
             <Route path="/edit/:vacationId" element={<EditVacation />} />
             <Route path="/new" element={<AddVacation />} />
+            <Route path="/statistics" element={<Graph />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/" element={<Navigate to="/greetings" />} />
