@@ -2,14 +2,21 @@ import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
 import "./Graph.css";
+import { vacationsStore } from "../../../Redux/VacationsState";
 
 function Graph(): JSX.Element {
   const chartRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-    const yValues = [55, 49, 44, 24, 15];
-    const barColors = ["red", "green", "blue", "orange", "brown"];
+    const vacations = vacationsStore.getState().vacations;
+    const xValues = [];
+    const yValues = [];
+    const barColors = [];
+    for (const v of vacations){
+      xValues.push(v.destination);
+      yValues.push(v.followersCount);
+      barColors.push("green");
+    }
 
     const ctx = chartRef.current?.getContext("2d");
     if (ctx) {
@@ -28,7 +35,7 @@ function Graph(): JSX.Element {
           legend: { display: false },
           title: {
             display: true,
-            text: "World Wine Production 2018",
+            text: "Vacations popularity",
           },
         } as any,
       });
