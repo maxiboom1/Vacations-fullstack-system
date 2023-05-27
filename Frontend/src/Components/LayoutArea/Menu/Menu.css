@@ -2,7 +2,7 @@
     background-color: rgba(82, 93, 167, 0.705);
     box-sizing: border-box; 
     color:#22181C;
-    font-size: 19px;
+    font-size: 16px;
     height: 100%;
     display: flex;
     justify-content: space-between;
@@ -11,8 +11,8 @@
 }
 
 .Menu > div>img{
-    width: 260px;
-    margin: 0px 30px; 
+    width: 230px;
+    margin: 5px 30px; 
 }
 
 .menuItems > span{
@@ -32,10 +32,29 @@
 
 }
 
+/* For screen above 1400px */
+@media (max-width: 1600px) {
+
+    .Menu{
+        font-size: 16px;
+    }
+
+    .Menu > div>img{
+        width: 200px;
+        margin: 5px 15px; 
+    }
+}
+
+
+
 /* For screen above 800px */
 @media (max-width: 800px) {
-.siteLogo{
-    display: none;
+    .siteLogo{
+        display: none;
+    }
+    .Menu{
+        font-size: 14px;
+    }
+
 }
-  }
 

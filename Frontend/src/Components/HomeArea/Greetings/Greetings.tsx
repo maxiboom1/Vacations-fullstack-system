@@ -8,6 +8,7 @@ import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
 import { useNavigate } from "react-router-dom";
 import { authStore } from "../../../Redux/AuthState";
 import { useEffect } from "react";
+import { Link } from "@mui/material";
 
 
 function Greetings(): JSX.Element {
@@ -73,8 +74,9 @@ function Greetings(): JSX.Element {
              
                 
             </div>
-
-            
+        <br /><br />
+        <Link href="https://github.com/maxiboom1" style={{ fontSize: "16px" }} variant="body2"> Created By Alex. </Link>
+        <br />
         </div>
     );
 }

@@ -1,3 +1,52 @@
-.PageNotFound {
-	
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 3s forwards;
+    animation-delay: 4s;
+  }
+  
+  .fadeInWithDelay {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    animation-delay: 6s;
+    font-size: 20px;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+
+  @keyframes moveFromLeft {
+    from {
+      transform: translateX(-700px);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes moveFromRight {
+    from {
+      transform: translateX(700px);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  
+  .move-from-left {
+    animation: moveFromLeft 4s forwards;
+  }
+  
+  .move-from-right {
+    animation: moveFromRight 4s forwards;
+  }
+  
+.PageNotFound > .fadeInWithDelay{
+
 }
