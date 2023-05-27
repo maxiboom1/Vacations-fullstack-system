@@ -10,6 +10,10 @@ import NoItemsFound from "../NoItemsFound/NoItemsFound";
 import { authStore } from "../../../Redux/AuthState";
 import { useNavigate } from "react-router-dom";
 import Filters from "../../../Models/FiltersModel";
+import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
+import LibraryAddOutlinedIcon from '@mui/icons-material/LibraryAddOutlined';
+import SignalCellularAltOutlinedIcon from '@mui/icons-material/SignalCellularAltOutlined';
+import CsvGenerator from "../../../Services/CsvService";
 
 function Home(): JSX.Element {
     
@@ -119,6 +123,21 @@ function Home(): JSX.Element {
     // Pages navigation handler
     const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => { setCurrentPage(value); };
 
+    function downloadCsv() {
+        // Create csv link
+        const csvLink = CsvGenerator(vacations);
+      
+        // Add HTML link to DOM
+        document.body.appendChild(csvLink);
+      
+        // Trigger click
+        csvLink.click();
+      
+        // Remove link from DOM
+        document.body.removeChild(csvLink);
+      }
+      
+
     return (
         
         <div className="Home">
@@ -131,7 +150,13 @@ function Home(): JSX.Element {
                 <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(Filters.ACTUAL_VACATIONS, (event.target as HTMLInputElement).checked)} label="Actual" />
                 <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(Filters.STARTED_VACATIONS, (event.target as HTMLInputElement).checked)} label="Started" />
             </div>
-        
+            
+            {user.roleId === 1 && <div className="adminTools">
+                <div><DownloadForOfflineOutlinedIcon className="adminIcons" onClick={downloadCsv} /></div>
+                <div><LibraryAddOutlinedIcon className="adminIcons" onClick={()=> navigate("/new")}/></div>
+                <div><SignalCellularAltOutlinedIcon className="adminIcons" onClick={()=> navigate("/statistics")} /></div>
+            </div>}
+            
             <div className="cardsBox">
 
                 {/* Data area */}

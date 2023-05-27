@@ -19,8 +19,6 @@ function Menu():JSX.Element {
       setTimeout(()=>{vacationsStore.dispatch({type:VacationsActionType.DeleteVacations});},100);
     },
     register: () => navigate("/register"),
-    add: ()=> navigate("/new"),
-    graph: ()=> navigate("/statistics"),
     home:()=> {
       if(user){
         navigate("/home");
@@ -42,8 +40,6 @@ function Menu():JSX.Element {
       
       <div className="menuItems">
         {user && <span className="userWelcome">Welcome, {user.firstName}! </span>}
-        {user?.roleId === 1 && <span onClick={()=> handleMenuClick(MenuItems.ADD)}>Add </span>}
-        {user?.roleId === 1 && <span onClick={()=> handleMenuClick(MenuItems.STATS)}>Stats </span>}
         {!user && <span onClick={()=> handleMenuClick(MenuItems.LOGIN)}>Login </span> }       
         {!user && <span onClick={()=> handleMenuClick(MenuItems.REGISTER)}>Register </span>}
         {user && <span onClick={()=> handleMenuClick(MenuItems.LOGOUT)}>Logout</span>}

@@ -5,31 +5,31 @@
     box-sizing: border-box;
 }
 
+.adminTools{
+    margin-top:10px;
+    display: flex; /* Float the div to the left */
+    justify-content: center;
+}
+
+.adminTools > div >.adminIcons {
+    font-size: 3rem;
+    margin: 10px 30px; /* Add horizontal margin of 20px */
+    color: rgba(62, 57, 107, 0.973);
+
+}
+
+.adminTools > div :hover {
+    cursor: pointer;
+    color:rgba(224, 62, 62, 0.692);
+}
+
 .cardsBox{
     padding: 0px 100px;
     box-sizing: border-box;
-    overflow: auto;
-    height: calc(100vh - 87px); 
-}
-
-.cardsBox::-webkit-scrollbar {
-    width: 0.1em;
-}
-  
-.cardsBox::-webkit-scrollbar-track {
-    background-color: transparent;
-}
-  
-.cardsBox::-webkit-scrollbar-thumb {
-    background-color: #cccccc;
-    border-radius: 0.5px;
-}
-  
-.cardsBox::-webkit-scrollbar-thumb:hover {
-    background-color: #aaa;
 }
 
 .filterMenu{
+    
     text-align: right;
     background-color: #cccccc52;
     color: black;
