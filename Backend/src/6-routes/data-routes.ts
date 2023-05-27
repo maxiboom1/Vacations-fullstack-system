@@ -24,7 +24,7 @@ router.get("/vacations", verifyLoggedIn, async (request: Request, response: Resp
 
 });
 
-router.get("/vacations/:id([0-9]+)", [verifyLoggedIn, verifyAdmin], async (request: Request, response: Response, next: NextFunction) => {
+router.get("/vacations/:id([0-9]+)", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const id = +request.params.id;
         const vacation = await dataService.getOneVacation(id);
@@ -34,7 +34,7 @@ router.get("/vacations/:id([0-9]+)", [verifyLoggedIn, verifyAdmin], async (reque
     }
 })
 
-router.get("/img/:imageName", async (request: Request, response: Response, next: NextFunction) => {
+router.get("/img/:imageName", verifyLoggedIn, async (request: Request, response: Response, next: NextFunction) => {
     
     try {
         const imageName = request.params.imageName;
@@ -47,7 +47,7 @@ router.get("/img/:imageName", async (request: Request, response: Response, next:
 
 });
 
-router.post("/vacations", async (request: Request, response: Response, next: NextFunction) => {
+router.post("/vacations", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
     
     try {
         // Take image if exist:
@@ -64,7 +64,7 @@ router.post("/vacations", async (request: Request, response: Response, next: Nex
     }
 });
 
-router.put("/vacations/:id([0-9]+)", async (request: Request, response: Response, next: NextFunction) => {
+router.put("/vacations/:id([0-9]+)", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
     
     try {
         request.body.vacationId = +request.params.id;
@@ -78,7 +78,7 @@ router.put("/vacations/:id([0-9]+)", async (request: Request, response: Response
     }
 });
 
-router.delete("/vacations/:id([0-9]+)", async (request: Request, response: Response, next: NextFunction) => {
+router.delete("/vacations/:id([0-9]+)", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const id = +request.params.id;
         await dataService.deleteVacation(id);

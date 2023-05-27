@@ -12,8 +12,8 @@
 }
 
 .adminTools > div >.adminIcons {
-    font-size: 3rem;
-    margin: 10px 30px; /* Add horizontal margin of 20px */
+    font-size: 2.2rem;
+    margin: 0px 40px; /* Add horizontal margin of 20px */
     color: rgba(62, 57, 107, 0.973);
 
 }
