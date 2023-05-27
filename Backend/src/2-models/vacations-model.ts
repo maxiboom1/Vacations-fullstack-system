@@ -33,7 +33,7 @@ class VacationModel {
     destination: Joi.string().required().min(7).max(30),
     description: Joi.string().required().min(20).max(500),
     startDate: Joi.date().greater('now').required().messages({
-      "date.greater": "Start date must be in the future",
+      "date.greater": "Start date must be future date",
     }),
     endDate: Joi.date().greater(Joi.ref('startDate')).required().messages({
       "date.greater": "End date must be greater than start date",

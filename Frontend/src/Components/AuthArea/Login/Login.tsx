@@ -53,7 +53,7 @@ export default function Login() {
           
           <Box component="form" onSubmit={handleSubmit(send)} noValidate sx={{ mt: 1 }}>
             
-            <TextField margin="dense" required fullWidth id="email" label="Email Address" name="email" 
+            <TextField margin="dense" fullWidth id="email" label="Email Address" name="email" 
               {...register("email", { 
                 required: "Email is required",
                 minLength: {value: 5, message: "Email must be at least 5 characters long"},
@@ -67,7 +67,7 @@ export default function Login() {
               helperText={errors.email?.message} 
               autoComplete="email" autoFocus />
             
-            <TextField margin="normal" required fullWidth name="password" label="Password" 
+            <TextField margin="normal" fullWidth name="password" label="Password" 
               {...register("password", { 
                 required: "Password is required", 
                 minLength: {value:4, message:"Password must be at least 4 symbols"},
