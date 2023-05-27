@@ -34,7 +34,7 @@ router.get("/vacations/:id([0-9]+)", verifyAdmin, async (request: Request, respo
     }
 })
 
-router.get("/img/:imageName", verifyLoggedIn, async (request: Request, response: Response, next: NextFunction) => {
+router.get("/img/:imageName", async (request: Request, response: Response, next: NextFunction) => {
     
     try {
         const imageName = request.params.imageName;
