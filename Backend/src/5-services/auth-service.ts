@@ -5,6 +5,7 @@ import dal from "../4-utils/dal";
 import RoleModel from "../2-models/role-model";
 import cyber from "../4-utils/cyber";
 import CredentialsModel from "../2-models/credentials-model";
+import logger from "../4-utils/logger";
 
 //Register - gets user, validate,  checks if email not taken, write to DB, create && return token.
 async function register(user: UserModel): Promise<string>{
@@ -24,7 +25,9 @@ async function register(user: UserModel): Promise<string>{
     user.userId = result.insertId;
 
     const token = cyber.createToken(user);
-        
+
+    logger.logActivity(`New user ${user.email} has been registered`);
+
     return token;
 
 }
@@ -45,6 +48,8 @@ async function login(cred: CredentialsModel): Promise<string>{
     if(!user) throw new UnauthorizedError(`Wrong username or password`) 
     
     const token = cyber.createToken(user);
+    
+    logger.logActivity(`User ${cred.email} has been logged in`);
 
     return token;
 
