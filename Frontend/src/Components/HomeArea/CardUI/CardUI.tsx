@@ -121,7 +121,7 @@ function CardUI(props: VacationProps): JSX.Element {
                     <div className="controlBar">
                         
                         {/* Likes sections visible only to users */}
-                        {user.roleId === 0 && <div className="likesBar">
+                        {user.roleId === 2 && <div className="likesBar">
                             <span>{followersCount}</span>
                             <FavoriteIcon sx={{ stroke: "#ffffff", strokeWidth: 1 }} style={{color: isFollowing ===1 ? "red": "#da9c9cc9"}} onClick={() => handleLike(data.vacationId)}/>
                         </div> }

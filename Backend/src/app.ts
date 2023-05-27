@@ -7,11 +7,13 @@ import appConfig from "./4-utils/app-config";
 import authRoutes from "./6-routes/auth-routes"
 import expressFileUpload from "express-fileupload";
 import socketIoService from "./5-services/socketIoService";
+import preventXss from "./3-middleware/prevent-xss";
 
 const server = express();
 
 server.use(cors());
 server.use(express.json());
+server.use(preventXss);
 server.use(expressFileUpload()); //Get files into request.files
 server.use("/api", authRoutes);
 server.use("/api", dataRoutes);
