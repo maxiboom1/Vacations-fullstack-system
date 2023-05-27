@@ -20,7 +20,7 @@ const theme = createTheme();
 
 function Register(): JSX.Element {
     
-    // The formState: { errors } used for validation messages in mui
+    // formState: { errors } used by MUI to print validation errors on form UI.
     const {register, handleSubmit, formState: { errors }} = useForm<UserModel>();
 
     const navigate = useNavigate();
@@ -58,7 +58,16 @@ function Register(): JSX.Element {
                                 margin="dense" 
                                 fullWidth 
                                 label="First name"   
-                                {...register("firstName", {required: "First name is required"})}
+                                {...register("firstName", {
+                                    required: "First name is required",
+                                    minLength: {value: 2, message: "First name must be at least 2 characters long"},
+                                    maxLength: {value: 30, message: "First name must not exceed 30 characters long"},
+                                    pattern: {
+                                        value: /^[A-Za-z]+$/,
+                                        message: "First name must contain only letters",
+                                    }
+                                    
+                                })}
                                 error={Boolean(errors.firstName)}
                                 helperText={errors.firstName?.message} 
                                 autoComplete="First name" 
@@ -69,7 +78,15 @@ function Register(): JSX.Element {
                                 margin="dense" 
                                 fullWidth 
                                 label="Last name" 
-                                {...register("lastName", { required: "Last name is required" } )} 
+                                {...register("lastName", { 
+                                    required: "Last name is required", 
+                                    minLength: {value: 2, message: "Last name must be at least 2 characters long"},
+                                    maxLength: {value: 30, message: "Last name must not exceed 30 characters long"},
+                                    pattern: {
+                                        value: /^[A-Za-z]+$/,
+                                        message: "First name must contain only letters",
+                                    }
+                                })} 
                                 error={Boolean(errors.lastName)}
                                 helperText={errors.lastName?.message} 
                                 autoComplete="Last name" 
@@ -79,7 +96,11 @@ function Register(): JSX.Element {
                                 margin="normal" 
                                 fullWidth 
                                 label="Email" 
-                                {...register("email", { required: "Email is required",pattern: { 
+                                {...register("email", { 
+                                    required: "Email is required",
+                                    minLength: {value: 5, message: "Email must be at least 5 characters long"},
+                                    maxLength: {value: 50, message: "Email must not exceed 50 characters long"},
+                                    pattern: { 
                                     value: /^\S+@\S+\.\S+$/, 
                                     message: "Invalid email address"
                                     } 
@@ -93,7 +114,11 @@ function Register(): JSX.Element {
                                 fullWidth 
                                 type="password" 
                                 label="Password" 
-                                {...register("password", { required: "Password is required", minLength: {value:4, message:"Must be at least 4 symbols"}} )} 
+                                {...register("password", { 
+                                    required: "Password is required", 
+                                    minLength: {value:4, message:"Password must be at least 4 symbols"},
+                                    maxLength: {value: 30, message: "Password must not exceed 30 characters long"},
+                                })} 
                                 error={Boolean(errors.password)}
                                 helperText={errors.password?.message} 
                             />

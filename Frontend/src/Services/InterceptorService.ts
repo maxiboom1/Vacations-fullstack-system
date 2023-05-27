@@ -15,20 +15,7 @@ class InterceptorService {
 
             // Return the updated request object:
             return requestObject;
-        });
-
-        // Token refresh:
-        axios.interceptors.response.use(
-            response => {
-              return response;
-            },
-            error => {
-              console.log(error);
-              //authStore.dispatch({type:AuthActionType.Logout});
-              //vacationsStore.dispatch({type: VacationsActionType.DeleteVacations});
-            }
-          );
-
+        });       
     }
 }
 
