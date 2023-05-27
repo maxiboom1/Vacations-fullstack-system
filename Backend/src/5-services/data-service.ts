@@ -26,6 +26,7 @@ async function getAllVacations(userId:number): Promise<VacationModel[]> {
 }
 
 async function getOneVacation(id: number): Promise<VacationModel> {
+    
     const sql = `SELECT description, destination, startDate, CONCAT('${appConfig.imagesUrl}', imageFileName) AS imageUrl, endDate, price, vacationId
     FROM vacations
     WHERE vacationId = ?
@@ -38,7 +39,7 @@ async function getOneVacation(id: number): Promise<VacationModel> {
 
 async function addVacation(vacation: VacationModel): Promise<VacationModel>{
     
-    // TODO: Validation...
+    vacation.validatePost();
 
     let imageName = "";
     
@@ -67,7 +68,7 @@ async function addVacation(vacation: VacationModel): Promise<VacationModel>{
 
 async function updateVacation(vacation: VacationModel): Promise<VacationModel>{
 
-    // TODO validation...
+    vacation.validatePut();
 
     let imageName = await getImageName(vacation.vacationId);
     if (vacation.image) {
