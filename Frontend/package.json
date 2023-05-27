@@ -21,6 +21,7 @@
     "jwt-decode": "^3.1.2",
     "notyf": "^3.10.0",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.2",
     "react-router-dom": "^6.8.1",
@@ -28,6 +29,7 @@
     "redux": "^4.2.1",
     "socket.io-client": "^4.6.1",
     "typescript": "^4.9.5",
+    "victory": "^36.6.10",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -55,6 +57,7 @@
     ]
   },
   "devDependencies": {
-    "@types/chart.js": "^2.9.37"
+    "@types/chart.js": "^2.9.37",
+    "@types/victory": "^35.0.0"
   }
 }
