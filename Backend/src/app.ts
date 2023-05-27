@@ -8,10 +8,18 @@ import authRoutes from "./6-routes/auth-routes"
 import expressFileUpload from "express-fileupload";
 import socketIoService from "./5-services/socketIoService";
 import preventXss from "./3-middleware/prevent-xss";
+import expressRateLimit from "express-rate-limit";
 
 const server = express();
 
-server.use(cors());
+//Prevent Dos attack
+server.use(expressRateLimit({
+    windowMs: 1000, // Window time to count requests
+    max: 50, // Max requests allowed in windowMs
+    message: "Try other way to hack my site" // Message
+}));
+
+server.use(cors({origin: "http://localhost:3000"}));
 server.use(express.json());
 server.use(preventXss);
 server.use(expressFileUpload()); //Get files into request.files
