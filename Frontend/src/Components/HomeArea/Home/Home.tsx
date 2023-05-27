@@ -9,13 +9,7 @@ import { Checkbox, FormControlLabel, Pagination, Stack } from "@mui/material";
 import NoItemsFound from "../NoItemsFound/NoItemsFound";
 import { authStore } from "../../../Redux/AuthState";
 import { useNavigate } from "react-router-dom";
-
-// Instead pass raw values from filter checkboxes, we use enum to avoid bugs/improve security 
-enum filters {
-    IS_FOLLOWING = 'isFollowing',
-    ACTUAL_VACATIONS = 'actualVacations',
-    STARTED_VACATIONS = 'startedVacations',
-    }
+import Filters from "../../../Models/FiltersModel";
 
 function Home(): JSX.Element {
     
@@ -36,37 +30,40 @@ function Home(): JSX.Element {
     // Onload, runs once
     useEffect(()=>{ 
         
+        // Restrict access to unauthorized users
         if(!user){ 
             navigate("/greetings"); 
             notifyService.error('You are not logged in');
             return;
         }
-        // Get data and render
+        
+        // Get data from local store
         let allVacations = vacationsStore.getState().vacations;
         
-        if(!allVacations){
+        // If no data in local store, get data from server, store state and calc pageCount 
+        if(allVacations.length === 0){
             dataService.getAllVacations()
-            .then((data)=>{allVacations = [...data];})
-            .catch((err: any)=>{notifyService.error(err);});
-        }
-        
-        setPageCount(Math.ceil(allVacations.length/cardsPerPage)); 
-        setVacations(allVacations);
-        
-        dataService.getAllVacations()
             .then((data)=>{
-                setPageCount(Math.ceil(data.length/cardsPerPage)); 
-                setVacations(data);
+                allVacations = [...data];
+                setPageCount(Math.ceil(allVacations.length/cardsPerPage)); 
+                setVacations(allVacations);
             })
-            .catch((err: any)=>{
-                notifyService.error(err);
-            })
+            .catch((err: any)=>{notifyService.error(err);});
+        
+        // If there is data in local store, store state and calc pageCount     
+        } else {
+            setPageCount(Math.ceil(allVacations.length/cardsPerPage)); 
+            setVacations(allVacations); 
+        }
+
         
         // Subscribe to vacations store to set updates 
         const unsubscribe = vacationsStore.subscribe(()=>{
             
+            // Get last redux action
             const action = vacationsStore.getState().lastAction;
-
+            
+            // If it was delete, render component (likes/followers actions handled from card redux listener)
             if(action === "DeleteVacation"){
                 const data = vacationsStore.getState().vacations;   
                 setVacations([...data]);
@@ -130,9 +127,9 @@ function Home(): JSX.Element {
             
             <div className="filterMenu">
                 <span style={{marginRight:"20px"}}>Filters:</span>
-                <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(filters.IS_FOLLOWING, (event.target as HTMLInputElement).checked)} label="Favorites" />
-                <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(filters.ACTUAL_VACATIONS, (event.target as HTMLInputElement).checked)} label="Actual" />
-                <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(filters.STARTED_VACATIONS, (event.target as HTMLInputElement).checked)} label="Started" />
+                <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(Filters.IS_FOLLOWING, (event.target as HTMLInputElement).checked)} label="Favorites" />
+                <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(Filters.ACTUAL_VACATIONS, (event.target as HTMLInputElement).checked)} label="Actual" />
+                <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(Filters.STARTED_VACATIONS, (event.target as HTMLInputElement).checked)} label="Started" />
             </div>
         
             <div className="cardsBox">

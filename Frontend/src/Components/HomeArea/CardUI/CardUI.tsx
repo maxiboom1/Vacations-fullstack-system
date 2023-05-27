@@ -29,10 +29,17 @@ function CardUI(props: VacationProps): JSX.Element {
     useEffect(()=>{
         
         const unsubscribe = vacationsStore.subscribe(()=>{
-            const localVacations = vacationsStore.getState().vacations;
-            const index = localVacations.findIndex((v)=> v.vacationId === data.vacationId);
-            setIsFollowing(localVacations[index]?.isFollowing);
-            setFollowersCount(localVacations[index]?.followersCount);
+            
+            // Get last redux action
+            const action = vacationsStore.getState().lastAction;
+                
+            // If it was like, render component
+            if(action === "UpdateFollow"){
+                const localVacations = vacationsStore.getState().vacations;
+                const index = localVacations.findIndex((v)=> v.vacationId === data.vacationId);
+                setIsFollowing(localVacations[index]?.isFollowing);
+                setFollowersCount(localVacations[index]?.followersCount);
+            }
         });
         
         return () => unsubscribe();
@@ -112,14 +119,18 @@ function CardUI(props: VacationProps): JSX.Element {
                     <span className="vacationPrice">Only {data.price}$</span>
                     <hr />
                     <div className="controlBar">
-                        <div className="likesBar" style={{color: user.roleId ===1 ? "gray": ""}}>
+                        
+                        {/* Likes sections visible only to users */}
+                        {user.roleId === 0 && <div className="likesBar">
                             <span>{followersCount}</span>
                             <FavoriteIcon sx={{ stroke: "#ffffff", strokeWidth: 1 }} style={{color: isFollowing ===1 ? "red": "#da9c9cc9"}} onClick={() => handleLike(data.vacationId)}/>
-                        </div>
+                        </div> }
+                        
+                        {/* Control sections visible only to admins */}
                         {user.roleId === 1 && <div>
                             <IconButton onClick={handleClick}> <MoreVertIcon /> </IconButton>
                             <Menu anchorEl={anchorEl} open={open} onClose={handleClose}> 
-                                {options.map((option) => ( <MenuItem key={option} onClick={(event) => handleClose(option)}> {option} </MenuItem> ))} 
+                                {options.map((option) => ( <MenuItem key={option} onClick={() => handleClose(option)}> {option} </MenuItem> ))} 
                             </Menu>
                         </div> }
 
