@@ -29,7 +29,7 @@ function Home(): JSX.Element {
     
     const [pageCount, setPageCount] = useState<number>(1);
     
-    const cardsPerPage = 6;
+    const cardsPerPage = 9;
     
     const calcPagination = () => {
         const endIndex = (currentPage * cardsPerPage);
