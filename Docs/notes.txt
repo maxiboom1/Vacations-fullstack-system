@@ -1,4 +1,4 @@
-- vacation redux store:
+- Vacation redux store:
 i added lastAction value to store, so i trigger logic based on lastAction event, since i subscribed to this store in 2 components (card and home).
 
 - Likes flow:
