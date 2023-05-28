@@ -18,13 +18,19 @@ import CsvGenerator from "../../../Services/CsvService";
 function Home(): JSX.Element {
     
     const user = authStore.getState().user;
+    
     const navigate = useNavigate();
     
     const [vacations, setVacations] = useState<VacationModel[]>([]); 
+    
     const [activeFilters, setActiveFilters] = useState([]); 
+    
     const [currentPage, setCurrentPage] = useState<number>(1);
+    
     const [pageCount, setPageCount] = useState<number>(1);
-    const cardsPerPage = 10;
+    
+    const cardsPerPage = 6;
+    
     const calcPagination = () => {
         const endIndex = (currentPage * cardsPerPage);
         const startIndex = endIndex - cardsPerPage ; 
@@ -71,6 +77,7 @@ function Home(): JSX.Element {
             if(action === "DeleteVacation"){
                 const data = vacationsStore.getState().vacations;   
                 setVacations([...data]);
+                setPageCount(Math.ceil(data.length/cardsPerPage)); 
             }
         return ()=> unsubscribe(); 
         });
@@ -165,7 +172,7 @@ function Home(): JSX.Element {
                 {vacations.length>0 && <h2>Vacations:</h2>}
                 <div>{calcPagination().map((v) => (<CardUI data={v} key={v.vacationId} />))}</div>
                 
-                {/* The 2-nd condition makes sure that it will be visible only when redux not empty (so i won't see this on page load) */}
+                {/* No Items Found => The 2-nd condition makes sure i won't see this on page load */}
                 {vacations.length === 0 && vacationsStore.getState().vacations.length > 0 && < NoItemsFound />}
                 
                 {/* Pagination bar */}
@@ -185,4 +192,3 @@ function Home(): JSX.Element {
 }
 
 export default Home;
-

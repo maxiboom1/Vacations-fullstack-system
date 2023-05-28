@@ -16,8 +16,6 @@ function Graph(): JSX.Element {
       yValues.push(v.followersCount);
     }
 
-    const maxCount = Math.max(...yValues); // Find the maximum integer value in yValues
-
     const ctx = chartRef.current?.getContext("2d");
     if (ctx) {
       new Chart(ctx, {

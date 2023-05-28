@@ -87,8 +87,11 @@ function CardUI(props: VacationProps): JSX.Element {
 
     async function deleteVacation(vacationId: number){
         try{
-            await dataService.deleteVacation(vacationId);
-            notifyService.success(`Vacation removed`);
+            const ok = window.confirm("Are you sure you want to delete this vacation?");
+            if (ok) {
+              await dataService.deleteVacation(vacationId);
+              notifyService.success(`Vacation removed`);
+            }
         }catch(err: any){
             notifyService.error(err);
         }

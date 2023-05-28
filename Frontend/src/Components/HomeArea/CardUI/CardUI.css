@@ -85,7 +85,6 @@
 
 /* Vacation price */
 .vacationPrice{
-    /* margin: 10px; */
     font-weight: bold;
     color: crimson;
 
@@ -99,9 +98,7 @@
   font-weight: 900;
   font-size: 18px;
   color: rgb(248, 0, 0);
-  /* background-color: rgba(0, 128, 0, 0.432); */
   width: 337px;
-  /* border-radius: -7px 81px; */
   display: flex;
   justify-items: center;
   height: 10px;

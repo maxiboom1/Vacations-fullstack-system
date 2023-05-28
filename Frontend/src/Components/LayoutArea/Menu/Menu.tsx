@@ -7,8 +7,7 @@ import { VacationsActionType, vacationsStore } from "../../../Redux/VacationsSta
 function Menu():JSX.Element {
   
   const user = authStore.getState().user;
-
-  enum MenuItems {LOGIN = "Login", LOGOUT = "Logout", ADD = "Add", REGISTER= "Register", STATS="graph"};
+  enum MenuItems {LOGIN = "Login", LOGOUT = "Logout", REGISTER= "Register"};
   const navigate = useNavigate();
   const menuEvents = {
     login: () => navigate("/login"),

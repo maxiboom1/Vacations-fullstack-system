@@ -15,8 +15,6 @@ class AppConfig {
     public socketURL = URL.SOCKET;
 }
 
-
-
 const appConfig = new AppConfig();
 
 export default appConfig;

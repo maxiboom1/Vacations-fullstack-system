@@ -1,10 +1,8 @@
 import "./Greetings.css";
 import img from "../../../Assets/Images/home-image1.jpg";
-
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import MouseIcon from '@mui/icons-material/Mouse';
 import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
-
 import { useNavigate } from "react-router-dom";
 import { authStore } from "../../../Redux/AuthState";
 import { useEffect } from "react";

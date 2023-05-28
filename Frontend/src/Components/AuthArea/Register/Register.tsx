@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import "./Register.css";
 import { useNavigate } from "react-router-dom";
 import UserModel from "../../../Models/UserModel";
 import { authStore } from "../../../Redux/AuthState";

@@ -16,7 +16,8 @@ class NotifyService {
         const message = this.extractErrorMessage(err);
         this.notyf.error(message);
     }
-
+    
+    // Error parser
     private extractErrorMessage(err: any): string {
 
         // If error is the message string: 

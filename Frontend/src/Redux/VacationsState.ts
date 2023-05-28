@@ -69,7 +69,8 @@ export function vacationsReducer(currentState = new VacationsState(), action: Va
             break;
     }
     
-    newState.lastAction = VacationsActionType[action.type]; // set the value of lastAction to the current action type
+    // Store current action as lastAction property, so components in subscribe can handle specific actions
+    newState.lastAction = VacationsActionType[action.type]; 
     
     return newState;
 }

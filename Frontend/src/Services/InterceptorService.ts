@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AuthActionType, authStore } from "../Redux/AuthState";
+import { authStore } from "../Redux/AuthState";
 
 class InterceptorService {
     
@@ -15,6 +15,7 @@ class InterceptorService {
 
             // Return the updated request object:
             return requestObject;
+        
         });       
     }
 }
