@@ -70,3 +70,43 @@ Invalid token
 Sun, 28 May 2023 07:44:04 GMT
 Wrong username or password
 ----------------------------------------------------------------------------------------------------
+Sun, 28 May 2023 09:09:34 GMT
+ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\85fc8081-8688-41a1-9c5c-2828d5d7256d.jpg'
+Stack: Error: ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\85fc8081-8688-41a1-9c5c-2828d5d7256d.jpg'
+----------------------------------------------------------------------------------------------------
+Sun, 28 May 2023 09:09:34 GMT
+ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\dc35d06b-70be-44fa-b04a-42fca85542d2.jpg'
+Stack: Error: ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\dc35d06b-70be-44fa-b04a-42fca85542d2.jpg'
+----------------------------------------------------------------------------------------------------
+Sun, 28 May 2023 09:09:34 GMT
+ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\f8c5eedb-3655-42ba-a6e2-5ada083ee262.jpg'
+Stack: Error: ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\f8c5eedb-3655-42ba-a6e2-5ada083ee262.jpg'
+----------------------------------------------------------------------------------------------------
+Sun, 28 May 2023 09:09:34 GMT
+ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\5f7b7469-4a94-4ac8-8f1c-a7deb7d07500.jpg'
+Stack: Error: ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\5f7b7469-4a94-4ac8-8f1c-a7deb7d07500.jpg'
+----------------------------------------------------------------------------------------------------
+Sun, 28 May 2023 09:09:34 GMT
+ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\ec8db242-715c-4662-b63a-efa89ed7a423.jpg'
+Stack: Error: ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\ec8db242-715c-4662-b63a-efa89ed7a423.jpg'
+----------------------------------------------------------------------------------------------------
+Sun, 28 May 2023 09:09:52 GMT
+ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\85fc8081-8688-41a1-9c5c-2828d5d7256d.jpg'
+Stack: Error: ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\85fc8081-8688-41a1-9c5c-2828d5d7256d.jpg'
+----------------------------------------------------------------------------------------------------
+Sun, 28 May 2023 09:09:52 GMT
+ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\dc35d06b-70be-44fa-b04a-42fca85542d2.jpg'
+Stack: Error: ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\dc35d06b-70be-44fa-b04a-42fca85542d2.jpg'
+----------------------------------------------------------------------------------------------------
+Sun, 28 May 2023 09:09:52 GMT
+ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\5f7b7469-4a94-4ac8-8f1c-a7deb7d07500.jpg'
+Stack: Error: ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\5f7b7469-4a94-4ac8-8f1c-a7deb7d07500.jpg'
+----------------------------------------------------------------------------------------------------
+Sun, 28 May 2023 09:09:52 GMT
+ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\ec8db242-715c-4662-b63a-efa89ed7a423.jpg'
+Stack: Error: ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\ec8db242-715c-4662-b63a-efa89ed7a423.jpg'
+----------------------------------------------------------------------------------------------------
+Sun, 28 May 2023 09:09:52 GMT
+ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\f8c5eedb-3655-42ba-a6e2-5ada083ee262.jpg'
+Stack: Error: ENOENT: no such file or directory, stat 'C:\github\Vacations-fullstack-system\Vacations-fullstack-system\Backend\src\1-assets\images\f8c5eedb-3655-42ba-a6e2-5ada083ee262.jpg'
+----------------------------------------------------------------------------------------------------
