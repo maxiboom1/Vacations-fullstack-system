@@ -25,7 +25,7 @@ function Graph(): JSX.Element {
         data: { labels: xValues, datasets: [ { data: yValues} ] },
         options: { plugins: {
           title: {display: true, text: "Vacations popularity"}, 
-          legend: {display: true}} 
+          legend: {display: false}} 
         },
       });
     }

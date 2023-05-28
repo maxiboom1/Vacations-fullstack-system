@@ -88,7 +88,7 @@ function EditVacation(): JSX.Element {
                         
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}><BorderColorIcon /></Avatar>
                         
-                        <Typography component="h1" variant="h5">Add Vacation</Typography>
+                        <Typography component="h1" variant="h5">Update Vacation</Typography>
                         
                         <Box component="form" onSubmit={handleSubmit(send)} noValidate sx={{ mt: 1 }}>
                         <Grid container alignItems="center" spacing={2} >
@@ -174,7 +174,7 @@ function EditVacation(): JSX.Element {
                             </Grid>
 
                             <Grid item xs={12}>   
-                            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>Add Vacation</Button>
+                            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>Update</Button>
                             </Grid>
                             
                             <Grid item xs={12}>   
