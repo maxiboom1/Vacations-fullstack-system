@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import UserModel from "../../../Models/UserModel";
 import { authStore } from "../../../Redux/AuthState";
 import notifyService from "../../../Services/NotifyService";
@@ -124,8 +124,8 @@ function Register(): JSX.Element {
 
                             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>Register</Button>
                             
-                            <Link href="/login" variant="body2"> Have an account? Login! </Link>
-                        
+                            <NavLink to={"/login"}> Have an account? Login! </NavLink>
+
                         </Box>
 
                     </Box>

@@ -23,7 +23,9 @@ async function register(user: UserModel): Promise<string>{
     const result:OkPacket = await dal.execute(sql, [user.firstName,user.lastName, user.email, user.password]);
 
     user.userId = result.insertId;
-
+    
+    user.roleId = RoleModel.User;
+    
     const token = cyber.createToken(user);
 
     logger.logActivity(`New user ${user.email} has been registered`);

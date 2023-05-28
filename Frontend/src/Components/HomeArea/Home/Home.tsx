@@ -18,7 +18,7 @@ import CsvGenerator from "../../../Services/CsvService";
 function Home(): JSX.Element {
     
     const user = authStore.getState().user;
-    
+
     const navigate = useNavigate();
     
     const [vacations, setVacations] = useState<VacationModel[]>([]); 
@@ -153,12 +153,12 @@ function Home(): JSX.Element {
             
             <div className="filterMenu">
                 <span style={{marginRight:"20px"}}>Filters:</span>
-                {user.roleId === 2 &&<FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(Filters.IS_FOLLOWING, (event.target as HTMLInputElement).checked)} label="Favorites" />}
+                {user?.roleId === 2 &&<FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(Filters.IS_FOLLOWING, (event.target as HTMLInputElement).checked)} label="Favorites" />}
                 <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(Filters.ACTUAL_VACATIONS, (event.target as HTMLInputElement).checked)} label="Actual" />
                 <FormControlLabel control={<Checkbox />} onChange={(event) => handleFilterChange(Filters.STARTED_VACATIONS, (event.target as HTMLInputElement).checked)} label="Started" />
             </div>
             
-            {user.roleId === 1 && <div className="adminTools">
+            {user?.roleId === 1 && <div className="adminTools">
                 <div><DownloadForOfflineOutlinedIcon className="adminIcons" onClick={downloadCsv} /></div>
                 <div><LibraryAddOutlinedIcon className="adminIcons" onClick={()=> navigate("/new")}/></div>
                 <div><SignalCellularAltOutlinedIcon className="adminIcons" onClick={()=> navigate("/statistics")} /></div>

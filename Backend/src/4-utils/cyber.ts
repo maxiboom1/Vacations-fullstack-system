@@ -7,7 +7,7 @@ import RoleModel from "../2-models/role-model";
 
 const secretKey = "My special secret key";
 
-async function createToken(user: UserModel): Promise<string>{
+async function createToken(user: UserModel): Promise<string> {
 
     // Delete password for security reasons
     delete user.password;
@@ -16,7 +16,7 @@ async function createToken(user: UserModel): Promise<string>{
     const container = { user };
 
     // Create options:
-    const options = { expiresIn: "3h" }; 
+    const options = { expiresIn: "6h" };
 
     // Create token: 
     const token = jwt.sign(container, secretKey, options);
@@ -25,20 +25,20 @@ async function createToken(user: UserModel): Promise<string>{
 
 }
 
-function decodeToken(token:string): UserModel {
-    
+function decodeToken(token: string): UserModel {
+
     const wrappedUser = (jwt.verify(token, secretKey)) as any; // maybe we need to fix it...
-    const {user} = wrappedUser;  
+    const { user } = wrappedUser;
     return user;
 
 }
 
-function hashPassword(password:string): string{
-    
+function hashPassword(password: string): string {
+
     const salt = "We’re updating the cards and ranking all the time";
-    
-    const hashedPassword = crypto.createHmac("sha512",salt).update(password).digest("hex");
-    
+
+    const hashedPassword = crypto.createHmac("sha512", salt).update(password).digest("hex");
+
     return hashedPassword;
 }
 
@@ -48,21 +48,17 @@ function hashPassword(password:string): string{
  * @param request Function will take "authorization" header from the request object.
  * @param adminCheck Optional, if gets true checks also for admin role.
  * @return Return true if token is valid, else throws err.
- */ 
+ */
 
 function verifyToken(request: Request, adminCheck?: boolean): boolean {
 
     const token = request.header("authorization")?.substring(7);
-    
-    if(!token) throw new UnauthorizedError('No token found');
 
+    if (!token) throw new UnauthorizedError('No token found');
 
-    jwt.verify(token, secretKey, (err, container:{user: UserModel})=>{
-        
-        if (err) throw new UnauthorizedError('Invalid token'); // Check for token validity
-    
+    jwt.verify(token, secretKey, (err, container: { user: UserModel }) => {
+        if (err) throw new UnauthorizedError('Invalid token111'); // Check for token validity
         if (adminCheck && container.user.roleId !== RoleModel.Admin) throw new UnauthorizedError('Access denied');
-    
     });
 
     return true;
